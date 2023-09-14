@@ -53,12 +53,27 @@
         <section class="py-5">
           <div class="container">
             <h1 class="text-center mb-3"><%= message %></h1>
-            <p class="text-center w-50 mx-auto">
+            <p class="text-center w-50 mx-auto mb-5">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa
               perferendis ab atque minus qui natus fuga autem, quae, iusto,
               consequatur saepe quos incidunt ut provident dolor illo
               doloremque. Veritatis, quibusdam.
             </p>
+            <form
+              class="d-flex flex-column gap-3 w-50 mx-auto"
+              action="/load-excel"
+              enctype="multipart/form-data"
+              method="post"
+            >
+              <input
+                type="file"
+                name="load-excel"
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              />
+              <button type="submit" value="Store File">
+                Load Excel Data to MySQL DB
+              </button>
+            </form>
           </div>
         </section>
       </main>
