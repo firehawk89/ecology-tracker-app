@@ -5,6 +5,7 @@ const app = express();
 const PORT = 3000;
 
 const objectsRoutes = require("./routes/objects");
+const pollutantsRoutes = require("./routes/pollutants");
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -12,6 +13,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use("/objects", objectsRoutes);
+app.use("/pollutants", pollutantsRoutes);
 
 app.get("/", (req, res) => {
   res.render("home", { message: "Hello, world!" });
