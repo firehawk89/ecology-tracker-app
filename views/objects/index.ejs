@@ -14,13 +14,13 @@
   <body>
     <div class="wrapper min-vh-100 d-flex flex-column">
       <%- include('../partials/header.ejs') %>
-      <main class="flex-sm-grow-1 flex-shrink-1 flex">
+      <main class="flex-grow-1 flex-shrink-1 flex">
         <section class="py-5">
           <div class="container">
             <h1 class="text-center mb-3">Objects</h1>
             <form
               class="d-flex flex-column gap-3 w-50 mx-auto"
-              action="/load-excel"
+              action="/objects"
               enctype="multipart/form-data"
               method="post"
             >
