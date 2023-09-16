@@ -14,7 +14,7 @@
   <body>
     <div class="wrapper min-vh-100 d-flex flex-column">
       <%- include('./partials/header.ejs') %>
-      <main class="flex-sm-grow-1 flex-shrink-1 flex">
+      <main class="flex-grow-1 flex-shrink-1 flex">
         <section class="py-5">
           <div class="container">
             <h1 class="text-center mb-3"><%= message %></h1>
@@ -24,21 +24,6 @@
               consequatur saepe quos incidunt ut provident dolor illo
               doloremque. Veritatis, quibusdam.
             </p>
-            <form
-              class="d-flex flex-column gap-3 w-50 mx-auto"
-              action="/load-excel"
-              enctype="multipart/form-data"
-              method="post"
-            >
-              <input
-                type="file"
-                name="load-excel"
-                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-              />
-              <button type="submit" value="Store File">
-                Load Excel Data to MySQL DB
-              </button>
-            </form>
           </div>
         </section>
       </main>
