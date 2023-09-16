@@ -1,8 +1,5 @@
 const express = require("express");
 const path = require("path");
-const mysqlPool = require("./config/db");
-const uploadFile = require("./config/multer");
-const readXlsxFile = require("read-excel-file/node");
 
 const app = express();
 const PORT = 3000;
@@ -19,26 +16,6 @@ app.use("/objects", objectsRoutes);
 app.get("/", (req, res) => {
   res.render("home", { message: "Hello, world!" });
 });
-
-app.post("/load-excel", uploadFile.single("load-excel"), async (req, res) => {
-  await loadDataToDB(process.cwd() + "/uploads/" + req.file.filename);
-  res.redirect("/");
-});
-
-function loadDataToDB(excelFile) {
-  readXlsxFile(excelFile).then(async (rows) => {
-    // Remove Header ROW
-    rows.shift();
-
-    await mysqlPool.query(
-      "INSERT INTO test (name, description) VALUES ?",
-      [rows],
-      (error, results) => {
-        console.log(error || results);
-      }
-    );
-  });
-}
 
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
