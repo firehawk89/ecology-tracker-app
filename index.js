@@ -7,10 +7,14 @@ const readXlsxFile = require("read-excel-file/node");
 const app = express();
 const PORT = 3000;
 
+const objectsRoutes = require("./routes/objects");
+
 app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+app.use("/objects", objectsRoutes);
 
 app.get("/", (req, res) => {
   res.render("home", { message: "Hello, world!" });
