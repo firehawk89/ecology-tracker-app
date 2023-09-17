@@ -20,14 +20,9 @@ app.get("/", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  const { statusCode = 500 } = err;
+  const { statusCode = 500, message = "Oh no, something went wrong!" } = err;
 
-  if (!err.errorMessage) {
-    err.errorMessage = "Oh no, something went wrong!";
-  }
-
-  console.error(err);
-  res.status(statusCode).send(err.errorMessage);
+  res.status(statusCode).send(message);
 });
 
 app.listen(PORT, () => {
