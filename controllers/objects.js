@@ -5,21 +5,21 @@ module.exports.index = (req, res) => {
   res.render("objects/index");
 };
 
-module.exports.loadExcelData = (req, res) => {
+module.exports.loadExcelData = (req, res, next) => {
   const excelFile = process.cwd() + "/uploads/" + req.file.filename;
 
-  readXlsxFile(excelFile).then((rows) => {
+  readXlsxFile(excelFile).then(async (rows) => {
     // Remove Header ROW
     rows.shift();
 
-    mysqlPool.query(
-      "INSERT INTO test (name, description) VALUES ?",
-      [rows],
-      (error, results) => {
-        console.log(error || results);
-      }
-    );
-  });
+    try {
+      await mysqlPool.query("INSERT INTO test (name, description) VALUES ?", [
+        rows,
+      ]);
 
-  res.redirect("/objects");
+      res.redirect("/objects");
+    } catch (e) {
+      next(new Error(e));
+    }
+  });
 };
