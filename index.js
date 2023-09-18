@@ -19,10 +19,14 @@ app.get("/", (req, res) => {
   res.render("home", { message: "Hello, world!" });
 });
 
+app.use((req, res, next) => {
+  res.status(404).render("error", { message: "Page Not Found" });
+});
+
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Oh no, something went wrong!" } = err;
 
-  res.status(statusCode).send(message);
+  res.status(statusCode).render("error", { message });
 });
 
 app.listen(PORT, () => {
