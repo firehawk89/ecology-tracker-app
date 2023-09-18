@@ -1,8 +1,14 @@
 const mysqlPool = require("../config/db");
 const readXlsxFile = require("read-excel-file/node");
 
-module.exports.index = (req, res) => {
-  res.render("objects/index");
+module.exports.index = async (req, res, next) => {
+  try {
+    const [rows] = await mysqlPool.query("SELECT * FROM object");
+
+    res.render("objects/index", { objectItems: rows });
+  } catch (e) {
+    next(new Error(e));
+  }
 };
 
 module.exports.loadExcelData = (req, res, next) => {
@@ -13,9 +19,10 @@ module.exports.loadExcelData = (req, res, next) => {
     rows.shift();
 
     try {
-      await mysqlPool.query("INSERT INTO test (name, description) VALUES ?", [
-        rows,
-      ]);
+      await mysqlPool.query(
+        "INSERT INTO object (object_name, activity, ownership_form, address) VALUES ?",
+        [rows]
+      );
 
       res.redirect("/objects");
     } catch (e) {
