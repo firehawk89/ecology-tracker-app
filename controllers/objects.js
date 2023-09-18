@@ -13,9 +13,10 @@ module.exports.loadExcelData = (req, res, next) => {
     rows.shift();
 
     try {
-      await mysqlPool.query("INSERT INTO test (name, description) VALUES ?", [
-        rows,
-      ]);
+      await mysqlPool.query(
+        "INSERT INTO object (object_name, activity, ownership_form, address) VALUES ?",
+        [rows]
+      );
 
       res.redirect("/objects");
     } catch (e) {

@@ -13,7 +13,7 @@ module.exports.loadExcelData = (req, res, next) => {
     rows.shift();
 
     try {
-      await mysqlPool.query("INSERT INTO test2 (name, gdk) VALUES ?", [rows]);
+      await mysqlPool.query("INSERT INTO pollutant (name, gdk) VALUES ?", [rows]);
 
       res.redirect("/pollutants");
     } catch (e) {
