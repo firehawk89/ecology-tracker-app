@@ -1,8 +1,14 @@
 const mysqlPool = require("../config/db");
 const readXlsxFile = require("read-excel-file/node");
 
-module.exports.index = (req, res) => {
-  res.render("objects/index");
+module.exports.index = async (req, res, next) => {
+  try {
+    const [rows] = await mysqlPool.query("SELECT * FROM object");
+
+    res.render("objects/index", { objectItems: rows });
+  } catch (e) {
+    next(new Error(e));
+  }
 };
 
 module.exports.loadExcelData = (req, res, next) => {
