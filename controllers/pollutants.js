@@ -2,7 +2,7 @@ const mysqlPool = require("../config/db");
 const readXlsxFile = require("read-excel-file/node");
 
 module.exports.index = (req, res) => {
-  res.render("objects/index");
+  res.render("pollutants/index");
 };
 
 module.exports.loadExcelData = (req, res, next) => {
@@ -13,11 +13,9 @@ module.exports.loadExcelData = (req, res, next) => {
     rows.shift();
 
     try {
-      await mysqlPool.query("INSERT INTO test (name, description) VALUES ?", [
-        rows,
-      ]);
+      await mysqlPool.query("INSERT INTO test2 (name, gdk) VALUES ?", [rows]);
 
-      res.redirect("/objects");
+      res.redirect("/pollutants");
     } catch (e) {
       next(new Error(e));
     }
