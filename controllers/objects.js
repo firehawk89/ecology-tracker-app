@@ -1,5 +1,6 @@
 const mysqlPool = require("../config/db");
 const readXlsxFile = require("read-excel-file/node");
+const AppError = require("../utils/AppError");
 
 module.exports.index = async (req, res, next) => {
   try {
@@ -11,22 +12,26 @@ module.exports.index = async (req, res, next) => {
   }
 };
 
-module.exports.loadExcelData = (req, res, next) => {
-  const excelFile = process.cwd() + "/uploads/" + req.file.filename;
+module.exports.loadExcelData = async (req, res, next) => {
+  let excelFile;
 
-  readXlsxFile(excelFile).then(async (rows) => {
-    // Remove Header ROW
+  try {
+    excelFile = process.cwd() + "/uploads/" + req.file.filename;
+  } catch (e) {
+    next(new AppError("File is not provided or not valid", 415));
+  }
+
+  try {
+    const rows = await readXlsxFile(excelFile);
     rows.shift();
 
-    try {
-      await mysqlPool.query(
-        "INSERT INTO object (object_name, activity, ownership_form, address) VALUES ?",
-        [rows]
-      );
+    await mysqlPool.query(
+      "INSERT INTO object (object_name, activity, ownership_form, address) VALUES ?",
+      [rows]
+    );
 
-      res.redirect("/objects");
-    } catch (e) {
-      next(new Error(e));
-    }
-  });
+    res.redirect("/objects");
+  } catch (e) {
+    next(new AppError("Provided excel file content is not valid", 422));
+  }
 };

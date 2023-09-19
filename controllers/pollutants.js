@@ -1,5 +1,6 @@
 const mysqlPool = require("../config/db");
 const readXlsxFile = require("read-excel-file/node");
+const AppError = require("../utils/AppError");
 
 module.exports.index = async (req, res, next) => {
   try {
@@ -11,22 +12,29 @@ module.exports.index = async (req, res, next) => {
   }
 };
 
-module.exports.loadExcelData = (req, res, next) => {
-  const excelFile = process.cwd() + "/uploads/" + req.file.filename;
+module.exports.loadExcelData = async (req, res, next) => {
+  let excelFile;
 
-  readXlsxFile(excelFile).then(async (rows) => {
-    // Remove Header ROW
+  try {
+    excelFile = process.cwd() + "/uploads/" + req.file.filename;
+  } catch (e) {
+    next(new AppError("File is not provided or not valid", 415));
+  }
+
+  try {
+    const rows = await readXlsxFile(excelFile);
     rows.shift();
 
-    try {
-      await mysqlPool.query(
-        "INSERT INTO pollutant (pollutant_name, gdk, min_mass_consumption, max_mass_consumption, danger_class) VALUES ?",
-        [rows]
-      );
+    // Store only necessary columns
+    rows.forEach((row) => row.splice(5));
 
-      res.redirect("/pollutants");
-    } catch (e) {
-      next(new Error(e));
-    }
-  });
+    await mysqlPool.query(
+      "INSERT INTO pollutant (pollutant_name, gdk, min_mass_consumption, max_mass_consumption, danger_class) VALUES ?",
+      [rows]
+    );
+
+    res.redirect("/pollutants");
+  } catch (e) {
+    next(new AppError("Provided excel file content is not valid", 422));
+  }
 };
