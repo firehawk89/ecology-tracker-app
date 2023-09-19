@@ -24,9 +24,9 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message = "Oh no, something went wrong!" } = err;
+  const { status = 500, message = "Oh no, something went wrong!" } = err;
 
-  res.status(statusCode).render("error", { message });
+  res.status(status).render("error", { message });
 });
 
 app.listen(PORT, () => {
