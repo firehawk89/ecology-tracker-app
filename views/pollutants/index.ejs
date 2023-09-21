@@ -16,27 +16,78 @@
       <%- include('../partials/header.ejs') %>
       <main class="flex-grow-1 flex-shrink-1 flex">
         <section class="py-5">
-          <div class="container">
+          <div class="container-xl">
             <h1 class="text-center mb-4">Забрудники</h1>
             <% if (pollutantItems.length > 0) { %>
-            <ul class="mb-5">
-              <% pollutantItems.forEach(pollutant => { %>
-              <li><%= pollutant.pollutant_name %></li>
-              <% }); %>
-            </ul>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered mb-5">
+                <thead>
+                  <tr class="align-middle">
+                    <th scope="col">#</th>
+                    <th scope="col">Назва</th>
+                    <th scope="col">Мін. показник масової витрати</th>
+                    <th scope="col">Макс. показник масової витрати</th>
+                    <th scope="col">ГДК</th>
+                    <th scope="col">Клас небезпеки</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% pollutantItems.forEach(pollutant => { %>
+                  <tr>
+                    <th scope="row"><%= pollutant.pollutant_id %></th>
+                    <td><%= pollutant.pollutant_name %></td>
+                    <td><%= pollutant.gdk %></td>
+                    <td><%= pollutant.min_mass_consumption %></td>
+                    <td><%= pollutant.max_mass_consumption %></td>
+                    <td><%= pollutant.danger_class %></td>
+                    <td class="align-middle">
+                      <div class="d-flex flex-column gap-2">
+                        <a
+                          class="btn btn-sm btn-warning"
+                          href="/edit/<%= pollutant.pollutant_id %>"
+                          >Edit</a
+                        >
+                        <form
+                          action="delete/<%= pollutant.pollutant_id %>"
+                          method="POST"
+                          style="display: inline"
+                        >
+                          <input
+                            class="btn btn-sm btn-danger"
+                            type="submit"
+                            value="Delete"
+                          />
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
             <% } %>
             <form
-              class="d-flex flex-column gap-3 w-50 mx-auto"
+              class="form-validate d-flex flex-column gap-3 w-50 mx-auto"
               action="/pollutants"
               enctype="multipart/form-data"
               method="post"
+              novalidate
             >
-              <input
-                type="file"
-                name="load-excel"
-                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-              />
-              <button type="submit" value="Store File">
+              <div>
+                <label class="form-label" for="formFile"
+                  >Оберіть Excel Файл</label
+                >
+                <input
+                  class="form-control"
+                  type="file"
+                  id="formFile"
+                  name="load-excel"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  required
+                />
+                <div class="invalid-feedback">Будь ласка, оберіть файл</div>
+              </div>
+              <button class="btn btn-primary" type="submit" value="Store File">
                 Завантажити дані з Excel файлу
               </button>
             </form>
@@ -50,5 +101,7 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+    <script src="/js/setActiveNavLink.js"></script>
+    <script src="/js/validateForms.js"></script>
   </body>
 </html>
