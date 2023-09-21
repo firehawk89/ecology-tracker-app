@@ -6,6 +6,7 @@ const PORT = 3000;
 
 const objectsRoutes = require("./routes/objects");
 const pollutantsRoutes = require("./routes/pollutants");
+const AppError = require("./utils/AppError");
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,8 +20,8 @@ app.get("/", (req, res) => {
   res.render("home", { message: "Hello, world!" });
 });
 
-app.use((req, res, next) => {
-  res.status(404).render("error", { message: "Page Not Found" });
+app.all("*", (req, res, next) => {
+  next(new AppError("Page Not Found", 404));
 });
 
 app.use((err, req, res, next) => {
