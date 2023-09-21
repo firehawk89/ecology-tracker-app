@@ -16,14 +16,54 @@
       <%- include('../partials/header.ejs') %>
       <main class="flex-grow-1 flex-shrink-1 flex">
         <section class="py-5">
-          <div class="container">
+          <div class="container-xl">
             <h1 class="text-center mb-4">Підприємства</h1>
             <% if (objectItems.length > 0) { %>
-            <ul class="mb-5">
-              <% objectItems.forEach(object => { %>
-              <li><%= object.object_name %></li>
-              <% }); %>
-            </ul>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered mb-5">
+                <thead>
+                  <tr class="align-middle">
+                    <th scope="col">#</th>
+                    <th scope="col">Назва</th>
+                    <th scope="col">Вид діяльності</th>
+                    <th scope="col">Форма власності</th>
+                    <th scope="col">Адреса</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% objectItems.forEach(object => { %>
+                  <tr>
+                    <th scope="row"><%= object.object_id %></th>
+                    <td><%= object.object_name %></td>
+                    <td><%= object.activity %></td>
+                    <td><%= object.ownership_form %></td>
+                    <td><%= object.address %></td>
+                    <td class="align-middle">
+                      <div class="d-flex flex-column gap-2">
+                        <a
+                          class="btn btn-sm btn-warning"
+                          href="/edit/<%= object.object_id %>"
+                          >Edit</a
+                        >
+                        <form
+                          action="delete/<%= object.object_id %>"
+                          method="POST"
+                          style="display: inline"
+                        >
+                          <input
+                            class="btn btn-sm btn-danger"
+                            type="submit"
+                            value="Delete"
+                          />
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
             <% } %>
             <form
               class="form-validate d-flex flex-column gap-3 w-50 mx-auto"
@@ -60,6 +100,7 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+    <script src="/js/setActiveNavLink.js"></script>
     <script src="/js/validateForms.js"></script>
   </body>
 </html>
