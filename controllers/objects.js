@@ -1,37 +1,28 @@
 const mysqlPool = require("../config/db");
 const readXlsxFile = require("read-excel-file/node");
+const catchAsyncError = require("../utils/catchAsyncError");
 const AppError = require("../utils/AppError");
 
-module.exports.index = async (req, res, next) => {
-  try {
-    const [rows] = await mysqlPool.query("SELECT * FROM object");
+module.exports.index = catchAsyncError(async (req, res, next) => {
+  const [rows] = await mysqlPool.query("SELECT * FROM object");
 
-    res.render("objects/index", { objectItems: rows });
-  } catch (e) {
-    next(new Error(e));
-  }
-};
+  res.render("objects/index", { objectItems: rows });
+});
 
-module.exports.loadExcelData = async (req, res, next) => {
-  let excelFile;
-
-  try {
-    excelFile = process.cwd() + "/uploads/" + req.file.filename;
-  } catch (e) {
-    next(new AppError("File is not provided or not valid", 415));
+module.exports.loadExcelData = catchAsyncError(async (req, res, next) => {
+  if (!req.file) {
+    throw new AppError("File is not provided", 415);
   }
 
-  try {
-    const rows = await readXlsxFile(excelFile);
-    rows.shift();
+  const excelFile = process.cwd() + "/uploads/" + req.file.filename;
 
-    await mysqlPool.query(
-      "INSERT INTO object (object_name, activity, ownership_form, address) VALUES ?",
-      [rows]
-    );
+  const rows = await readXlsxFile(excelFile);
+  rows.shift();
 
-    res.redirect("/objects");
-  } catch (e) {
-    next(new AppError("Provided excel file content is not valid", 422));
-  }
-};
+  await mysqlPool.query(
+    "INSERT INTO object (object_name, activity, ownership_form, address) VALUES ?",
+    [rows]
+  );
+
+  res.redirect("/objects");
+});
