@@ -1,12 +1,12 @@
-const mysqlPool = require("../config/db");
 const readXlsxFile = require("read-excel-file/node");
 const catchAsyncError = require("../utils/catchAsyncError");
 const AppError = require("../utils/AppError");
+const objectService = require("../services/object");
 
 module.exports.index = catchAsyncError(async (req, res, next) => {
-  const [rows] = await mysqlPool.query("SELECT * FROM object");
+  const objectItems = await objectService.getAll();
 
-  res.render("objects/index", { objectItems: rows });
+  res.render("objects/index", { objectItems });
 });
 
 module.exports.loadExcelData = catchAsyncError(async (req, res, next) => {
@@ -19,10 +19,7 @@ module.exports.loadExcelData = catchAsyncError(async (req, res, next) => {
   const rows = await readXlsxFile(excelFile);
   rows.shift();
 
-  await mysqlPool.query(
-    "INSERT INTO object (object_name, activity, ownership_form, address) VALUES ?",
-    [rows]
-  );
+  await objectService.insertMany(rows);
 
   res.redirect("/objects");
 });
