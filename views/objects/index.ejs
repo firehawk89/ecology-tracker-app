@@ -26,17 +26,27 @@
             </ul>
             <% } %>
             <form
-              class="d-flex flex-column gap-3 w-50 mx-auto"
+              class="form-validate d-flex flex-column gap-3 w-50 mx-auto"
               action="/objects"
               enctype="multipart/form-data"
               method="post"
+              novalidate
             >
-              <input
-                type="file"
-                name="load-excel"
-                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-              />
-              <button type="submit" value="Store File">
+              <div>
+                <label class="form-label" for="formFile"
+                  >Оберіть Excel Файл</label
+                >
+                <input
+                  class="form-control"
+                  type="file"
+                  id="formFile"
+                  name="load-excel"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  required
+                />
+                <div class="invalid-feedback">Будь ласка, оберіть файл</div>
+              </div>
+              <button class="btn btn-primary" type="submit" value="Store File">
                 Завантажити дані з Excel файлу
               </button>
             </form>
@@ -50,5 +60,6 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+    <script src="/js/validateForms.js"></script>
   </body>
 </html>
