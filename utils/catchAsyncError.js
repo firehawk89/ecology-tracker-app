@@ -1,7 +1,7 @@
-function catchAsyncError(fn) {
+const catchAsyncError = (fn) => {
   return function (req, res, next) {
     fn(req, res, next).catch((err) => next(err));
   };
-}
+};
 
 module.exports = catchAsyncError;
