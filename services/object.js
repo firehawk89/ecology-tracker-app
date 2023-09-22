@@ -11,3 +11,7 @@ module.exports.insertMany = async (rows) => {
     [rows]
   );
 };
+
+module.exports.deleteOneById = async (id) => {
+  await mysqlPool.query("DELETE FROM object WHERE object_id = ?", [id]);
+};
