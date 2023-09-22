@@ -22,7 +22,19 @@ module.exports.loadExcelData = catchAsyncError(async (req, res, next) => {
   // Store only necessary columns
   rows.forEach((row) => row.splice(5));
 
-  await pollutantService.insertMany(rows);
+  try {
+    await pollutantService.insertMany(rows);
+  } catch {
+    throw new AppError("Number of columns doesn't match or data is invalid.");
+  }
+
+  res.redirect("/pollutants");
+});
+
+module.exports.deletePollutant = catchAsyncError(async (req, res, next) => {
+  const { pollutantId } = req.params;
+
+  await pollutantService.deleteOneById(pollutantId);
 
   res.redirect("/pollutants");
 });
