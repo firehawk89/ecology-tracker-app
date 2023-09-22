@@ -1,12 +1,12 @@
-const mysqlPool = require("../config/db");
 const readXlsxFile = require("read-excel-file/node");
 const catchAsyncError = require("../utils/catchAsyncError");
 const AppError = require("../utils/AppError");
+const pollutantService = require("../services/pollutant");
 
 module.exports.index = catchAsyncError(async (req, res, next) => {
-  const [rows] = await mysqlPool.query("SELECT * FROM pollutant");
+  const pollutantItems = await pollutantService.getAll();
 
-  res.render("pollutants/index", { pollutantItems: rows });
+  res.render("pollutants/index", { pollutantItems });
 });
 
 module.exports.loadExcelData = catchAsyncError(async (req, res, next) => {
@@ -22,10 +22,7 @@ module.exports.loadExcelData = catchAsyncError(async (req, res, next) => {
   // Store only necessary columns
   rows.forEach((row) => row.splice(5));
 
-  await mysqlPool.query(
-    "INSERT INTO pollutant (pollutant_name, gdk, min_mass_consumption, max_mass_consumption, danger_class) VALUES ?",
-    [rows]
-  );
+  await pollutantService.insertMany(rows);
 
   res.redirect("/pollutants");
 });
