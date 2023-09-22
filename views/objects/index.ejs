@@ -28,7 +28,7 @@
                     <th scope="col">Вид діяльності</th>
                     <th scope="col">Форма власності</th>
                     <th scope="col">Адреса</th>
-                    <th></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -47,7 +47,7 @@
                           >Edit</a
                         >
                         <form
-                          action="delete/<%= object.object_id %>"
+                          action="/objects/<%= object.object_id %>?_method=DELETE"
                           method="POST"
                           style="display: inline"
                         >

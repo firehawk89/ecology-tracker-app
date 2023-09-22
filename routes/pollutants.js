@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const pollutants = require("../controllers/pollutants");
+const pollutantControllers = require("../controllers/pollutants");
 const uploadFile = require("../config/multer");
 
 router
   .route("/")
-  .get(pollutants.index)
-  .post(uploadFile.single("load-excel"), pollutants.loadExcelData);
+  .get(pollutantControllers.index)
+  .post(uploadFile.single("load-excel"), pollutantControllers.loadExcelData);
+
+router.route("/:pollutantId").delete(pollutantControllers.deletePollutant);
 
 module.exports = router;

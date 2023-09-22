@@ -25,10 +25,11 @@
                   <tr class="align-middle">
                     <th scope="col">#</th>
                     <th scope="col">Назва</th>
-                    <th scope="col">Мін. показник масової витрати</th>
-                    <th scope="col">Макс. показник масової витрати</th>
-                    <th scope="col">ГДК</th>
+                    <th scope="col">Мін. показник масової витрати (т/рік)</th>
+                    <th scope="col">Макс. показник масової витрати (т/рік)</th>
+                    <th scope="col">ГДК (мг/м<sup>3</sup>)</th>
                     <th scope="col">Клас небезпеки</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -48,7 +49,7 @@
                           >Edit</a
                         >
                         <form
-                          action="delete/<%= pollutant.pollutant_id %>"
+                          action="/pollutants/<%= pollutant.pollutant_id %>?_method=DELETE"
                           method="POST"
                           style="display: inline"
                         >

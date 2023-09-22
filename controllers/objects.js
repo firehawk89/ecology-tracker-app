@@ -19,7 +19,19 @@ module.exports.loadExcelData = catchAsyncError(async (req, res, next) => {
   const rows = await readXlsxFile(excelFile);
   rows.shift();
 
-  await objectService.insertMany(rows);
+  try {
+    await objectService.insertMany(rows);
+  } catch {
+    throw new AppError("Number of columns doesn't match or data is invalid.");
+  }
+
+  res.redirect("/objects");
+});
+
+module.exports.deleteObject = catchAsyncError(async (req, res, next) => {
+  const { objectId } = req.params;
+
+  await objectService.deleteOneById(objectId);
 
   res.redirect("/objects");
 });
