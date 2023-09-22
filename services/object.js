@@ -5,6 +5,13 @@ module.exports.getAll = async () => {
   return rows;
 };
 
+module.exports.insertOne = async (object) => {
+  await mysqlPool.query(
+    "INSERT INTO object (object_name, activity, ownership_form, address) VALUES (?, ?, ?, ?)",
+    [object.name, object.activity, object.ownershipForm, object.address]
+  );
+};
+
 module.exports.insertMany = async (rows) => {
   await mysqlPool.query(
     "INSERT INTO object (object_name, activity, ownership_form, address) VALUES ?",
