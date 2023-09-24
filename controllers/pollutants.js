@@ -50,6 +50,42 @@ module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   res.redirect("/pollutants");
 });
 
+module.exports.renderEditPollutantForm = catchAsyncError(
+  async (req, res, next) => {
+    const { pollutantId } = req.params;
+
+    if (isNaN(pollutantId)) {
+      throw new AppError("Pollutant with given id not found.", 404);
+    }
+
+    const pollutant = await pollutantService.getById(pollutantId);
+
+    if (!pollutant) {
+      throw new AppError("Pollutant with given id not found.", 404);
+    }
+
+    res.render("pollutants/edit", { pollutant });
+  }
+);
+
+module.exports.updatePollutant = catchAsyncError(async (req, res, next) => {
+  const { pollutantId } = req.params;
+  const { pollutant } = req.body;
+
+  const transformedPollutant = objEmptyStrToNull(pollutant);
+
+  const result = await pollutantService.updateOneById(
+    pollutantId,
+    transformedPollutant
+  );
+
+  if (result === 0) {
+    throw new AppError("Pollutant with given id not found.", 404);
+  }
+
+  res.redirect("/pollutants");
+});
+
 module.exports.deletePollutant = catchAsyncError(async (req, res, next) => {
   const { pollutantId } = req.params;
 

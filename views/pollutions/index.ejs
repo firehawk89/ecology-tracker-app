@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ecology App - Забрудники</title>
+    <title>Ecology App - Забруднення</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -19,19 +19,19 @@
           <div class="container-xl">
             <div class="d-flex flex-wrap row-gap-2 p-3 border">
               <div class="text-center text-sm-start col-12 col-sm-6">
-                <h1>Забрудники</h1>
+                <h1>Забруднення</h1>
               </div>
               <div
                 class="col-12 col-sm-6 d-flex flex-wrap justify-content-center justify-content-sm-end align-items-center gap-2"
               >
-                <a class="btn btn-success" href="/pollutants/new"
-                  >Додати забрудник</a
+                <a class="btn btn-success" href="/pollutions/new"
+                  >Додати забруднення</a
                 >
               </div>
             </div>
-            <% if (pollutantItems.length <= 0) { %>
+            <% if (pollutionItems.length <= 0) { %>
             <div class="alert alert-info my-4">
-              <p class="text-center m-0 fs-6">Забрудники відсутні.</p>
+              <p class="text-center m-0 fs-6">Забруднення відсутні.</p>
             </div>
             <% } else { %>
             <div class="table-responsive">
@@ -39,32 +39,30 @@
                 <thead>
                   <tr class="align-middle">
                     <th scope="col">#</th>
-                    <th scope="col">Назва</th>
-                    <th scope="col">Мін. показник масової витрати (т/рік)</th>
-                    <th scope="col">Макс. показник масової витрати (т/рік)</th>
-                    <th scope="col">ГДК (мг/м<sup>3</sup>)</th>
-                    <th scope="col">Клас небезпеки</th>
+                    <th scope="col">Об'єкт</th>
+                    <th scope="col">Речовина</th>
+                    <th scope="col">Кількість (т/рік)</th>
+                    <th scope="col">Рік</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% pollutantItems.forEach(pollutant => { %>
+                  <% pollutionItems.forEach(pollution => { %>
                   <tr>
-                    <th scope="row"><%= pollutant.pollutant_id %></th>
-                    <td><%= pollutant.pollutant_name %></td>
-                    <td><%= pollutant.min_mass_consumption %></td>
-                    <td><%= pollutant.max_mass_consumption %></td>
-                    <td><%= pollutant.gdk %></td>
-                    <td><%= pollutant.danger_class %></td>
+                    <th scope="row"><%= pollution.pollution_id %></th>
+                    <td><%= pollution.object_id %></td>
+                    <td><%= pollution.pollutant_id %></td>
+                    <td><%= pollution.pollution_value %></td>
+                    <td><%= pollution.pollution_date %></td>
                     <td class="align-middle">
                       <div class="d-flex flex-column gap-2">
                         <a
                           class="btn btn-sm btn-warning"
-                          href="/pollutants/<%= pollutant.pollutant_id %>/edit"
+                          href="/pollutions/<%= pollution.pollution_id %>/edit"
                           >Edit</a
                         >
                         <form
-                          action="/pollutants/<%= pollutant.pollutant_id %>?_method=DELETE"
+                          action="/pollutions/<%= pollution.pollution_id %>?_method=DELETE"
                           method="POST"
                           style="display: inline"
                         >

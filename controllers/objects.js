@@ -69,7 +69,9 @@ module.exports.updateObject = catchAsyncError(async (req, res, next) => {
   const { objectId } = req.params;
   const { object } = req.body;
 
-  const result = await objectService.updateOneById(objectId, object);
+  const transformedObject = objEmptyStrToNull(object);
+
+  const result = await objectService.updateOneById(objectId, transformedObject);
 
   if (result === 0) {
     throw new AppError("Object with given id not found.", 404);

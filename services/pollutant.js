@@ -5,6 +5,14 @@ module.exports.getAll = async () => {
   return rows;
 };
 
+module.exports.getById = async (id) => {
+  const [row] = await mysqlPool.query(
+    "SELECT * FROM pollutant WHERE pollutant_id = ?",
+    [id]
+  );
+  return row[0];
+};
+
 module.exports.insertOne = async (pollutant) => {
   await mysqlPool.query(
     "INSERT INTO pollutant (pollutant_name, min_mass_consumption, max_mass_consumption, gdk, danger_class) VALUES (?, ?, ?, ?, ?)",
@@ -20,9 +28,24 @@ module.exports.insertOne = async (pollutant) => {
 
 module.exports.insertMany = async (rows) => {
   await mysqlPool.query(
-    "INSERT INTO pollutant (pollutant_name, gdk, min_mass_consumption, max_mass_consumption, danger_class) VALUES ?",
+    "INSERT INTO pollutant (pollutant_name, min_mass_consumption, max_mass_consumption, gdk, danger_class) VALUES ?",
     [rows]
   );
+};
+
+module.exports.updateOneById = async (id, pollutant) => {
+  const result = await mysqlPool.query(
+    "UPDATE pollutant SET pollutant_name = ?, min_mass_consumption = ?, max_mass_consumption = ?, gdk = ?, danger_class = ? WHERE pollutant_id = ?",
+    [
+      pollutant.name,
+      pollutant.minMassCons,
+      pollutant.maxMassCons,
+      pollutant.gdk,
+      pollutant.dangerClass,
+      id,
+    ]
+  );
+  return result[0].affectedRows;
 };
 
 module.exports.deleteOneById = async (id) => {
