@@ -15,6 +15,13 @@ router
   .route("/load-excel")
   .post(uploadFile.single("load-excel"), pollutantControllers.loadFromExcel);
 
-router.route("/:pollutantId").delete(pollutantControllers.deletePollutant);
+router
+  .route("/:pollutantId")
+  .put(pollutantControllers.updatePollutant)
+  .delete(pollutantControllers.deletePollutant);
+
+router
+  .route("/:pollutantId/edit")
+  .get(pollutantControllers.renderEditPollutantForm);
 
 module.exports = router;
