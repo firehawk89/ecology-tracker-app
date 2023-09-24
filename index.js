@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
   res.render("home", { message: "Hello, world!" });
 });
 
-app.all("*", (req, res, next) => {
+app.get("*", (req, res, next) => {
   next(new AppError("Page Not Found", 404));
 });
 
