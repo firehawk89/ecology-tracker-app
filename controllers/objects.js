@@ -47,6 +47,37 @@ module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   res.redirect("/objects");
 });
 
+module.exports.renderEditObjectForm = catchAsyncError(
+  async (req, res, next) => {
+    const { objectId } = req.params;
+
+    if (isNaN(objectId)) {
+      throw new AppError("Object with given id not found.", 404);
+    }
+
+    const object = await objectService.getById(objectId);
+
+    if (!object) {
+      throw new AppError("Object with given id not found.", 404);
+    }
+
+    res.render("objects/edit", { object });
+  }
+);
+
+module.exports.updateObject = catchAsyncError(async (req, res, next) => {
+  const { objectId } = req.params;
+  const { object } = req.body;
+
+  const result = await objectService.updateOneById(objectId, object);
+
+  if (result === 0) {
+    throw new AppError("Object with given id not found.", 404);
+  }
+
+  res.redirect("/objects");
+});
+
 module.exports.deleteObject = catchAsyncError(async (req, res, next) => {
   const { objectId } = req.params;
 

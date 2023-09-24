@@ -15,6 +15,11 @@ router
   .route("/load-excel")
   .post(uploadFile.single("load-excel"), objectControllers.loadFromExcel);
 
-router.route("/:objectId").delete(objectControllers.deleteObject);
+router
+  .route("/:objectId")
+  .put(objectControllers.updateObject)
+  .delete(objectControllers.deleteObject);
+
+router.route("/:objectId/edit").get(objectControllers.renderEditObjectForm);
 
 module.exports = router;
