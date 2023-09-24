@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecology App - Забруднення</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="wrapper min-vh-100 d-flex flex-column">
+      <%- include('../partials/header.ejs') %>
+      <main class="flex-grow-1 flex-shrink-1 flex">
+        <section class="py-5">
+          <div class="container-xl">
+            <div class="d-flex flex-wrap row-gap-2 p-3 border">
+              <div class="text-center text-sm-start col-12 col-sm-6">
+                <h1>Забруднення</h1>
+              </div>
+              <div
+                class="col-12 col-sm-6 d-flex flex-wrap justify-content-center justify-content-sm-end align-items-center gap-2"
+              >
+                <a class="btn btn-success" href="/pollutions/new"
+                  >Додати забруднення</a
+                >
+              </div>
+            </div>
+            <% if (pollutionItems.length <= 0) { %>
+            <div class="alert alert-info my-4">
+              <p class="text-center m-0 fs-6">Забруднення відсутні.</p>
+            </div>
+            <% } else { %>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered mb-5">
+                <thead>
+                  <tr class="align-middle">
+                    <th scope="col">#</th>
+                    <th scope="col">Об'єкт</th>
+                    <th scope="col">Речовина</th>
+                    <th scope="col">Кількість (т/рік)</th>
+                    <th scope="col">Рік</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% pollutionItems.forEach(pollution => { %>
+                  <tr>
+                    <th scope="row"><%= pollution.pollution_id %></th>
+                    <td><%= pollution.object_id %></td>
+                    <td><%= pollution.pollutant_id %></td>
+                    <td><%= pollution.pollution_value %></td>
+                    <td><%= pollution.pollution_date %></td>
+                    <td class="align-middle">
+                      <div class="d-flex flex-column gap-2">
+                        <a
+                          class="btn btn-sm btn-warning"
+                          href="/pollutions/<%= pollution.pollution_id %>/edit"
+                          >Edit</a
+                        >
+                        <form
+                          action="/pollutions/<%= pollution.pollution_id %>?_method=DELETE"
+                          method="POST"
+                          style="display: inline"
+                        >
+                          <input
+                            class="btn btn-sm btn-danger"
+                            type="submit"
+                            value="Delete"
+                          />
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+            <% } %>
+          </div>
+        </section>
+      </main>
+      <%- include('../partials/footer.ejs') %>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/setActiveNavLink.js"></script>
+    <script src="/js/validateForms.js"></script>
+  </body>
+</html>
