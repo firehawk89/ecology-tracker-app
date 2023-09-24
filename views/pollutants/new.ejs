@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecology App - Забрудники</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="wrapper min-vh-100 d-flex flex-column">
+      <%- include('../partials/header.ejs') %>
+      <main class="flex-grow-1 flex-shrink-1 flex">
+        <section class="py-5">
+          <div class="container-xl">
+            <h1 class="text-center mb-4">Додати забрудник</h1>
+            <form
+              class="form-validate d-flex flex-column gap-3 col-12 col-sm-8 col-md-7 col-lg-6 col-xl-5 mx-auto"
+              action="/pollutants"
+              method="POST"
+              novalidate
+            >
+              <div>
+                <label class="form-label" for="pollutantName"
+                  >Назва <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  id="pollutantName"
+                  name="pollutant[name]"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Будь ласка, введіть назву підприємства
+                </div>
+              </div>
+              <div>
+                <label class="form-label" for="pollutantMinMassCons"
+                  >Мін. масова витрата (т/рік)</label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  step="any"
+                  id="pollutantMinMassCons"
+                  name="pollutant[minMassCons]"
+                />
+              </div>
+              <div>
+                <label class="form-label" for="pollutantMaxMassCons"
+                  >Макс. масова витрата (т/рік)</label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  step="any"
+                  id="pollutantMaxMassCons"
+                  name="pollutant[maxMassCons]"
+                />
+              </div>
+              <div>
+                <label class="form-label" for="pollutantGDK">ГДК</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  step="any"
+                  id="pollutantGDK"
+                  name="pollutant[gdk]"
+                />
+              </div>
+              <div>
+                <label class="form-label" for="pollutantDangerClass"
+                  >Клас небезпеки</label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  min="1"
+                  max="4"
+                  id="pollutantDangerClass"
+                  name="pollutant[dangerClass]"
+                />
+                <div class="invalid-feedback">
+                  Будь ласка, вкажіть значення від 1 до 4
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit">Відправити</button>
+            </form>
+            <span class="fs-5 d-block w-100 text-center my-4 px-1">АБО</span>
+            <form
+              class="form-validate d-flex flex-column gap-3 col-12 col-sm-8 col-md-7 col-lg-6 col-xl-5 mx-auto"
+              action="/pollutants/load-excel"
+              enctype="multipart/form-data"
+              method="POST"
+              novalidate
+            >
+              <div>
+                <label class="form-label" for="formFile"
+                  >Оберіть Excel Файл</label
+                >
+                <input
+                  class="form-control"
+                  type="file"
+                  id="formFile"
+                  name="load-excel"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  required
+                />
+                <div class="invalid-feedback">Будь ласка, оберіть файл</div>
+              </div>
+              <button class="btn btn-primary" type="submit" value="Store File">
+                Завантажити дані з Excel файлу
+              </button>
+            </form>
+          </div>
+        </section>
+      </main>
+      <%- include('../partials/footer.ejs') %>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/setActiveNavLink.js"></script>
+    <script src="/js/validateForms.js"></script>
+  </body>
+</html>
