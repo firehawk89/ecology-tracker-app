@@ -17,7 +17,18 @@
       <main class="flex-grow-1 flex-shrink-1 flex">
         <section class="py-5">
           <div class="container-xl">
-            <h1 class="text-center mb-4">Підприємства</h1>
+            <div class="d-flex p-3 border">
+              <div class="col-6">
+                <h1>Підприємства</h1>
+              </div>
+              <div
+                class="col-6 d-flex flex-wrap justify-content-end align-items-center gap-2"
+              >
+                <a class="btn btn-success" href="/objects/new"
+                  >Додати підприємство</a
+                >
+              </div>
+            </div>
             <% if (objectItems.length > 0) { %>
             <div class="table-responsive">
               <table class="table table-striped table-bordered mb-5">
@@ -65,31 +76,6 @@
               </table>
             </div>
             <% } %>
-            <form
-              class="form-validate d-flex flex-column gap-3 w-50 mx-auto"
-              action="/objects"
-              enctype="multipart/form-data"
-              method="post"
-              novalidate
-            >
-              <div>
-                <label class="form-label" for="formFile"
-                  >Оберіть Excel Файл</label
-                >
-                <input
-                  class="form-control"
-                  type="file"
-                  id="formFile"
-                  name="load-excel"
-                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                  required
-                />
-                <div class="invalid-feedback">Будь ласка, оберіть файл</div>
-              </div>
-              <button class="btn btn-primary" type="submit" value="Store File">
-                Завантажити дані з Excel файлу
-              </button>
-            </form>
           </div>
         </section>
       </main>

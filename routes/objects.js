@@ -7,7 +7,13 @@ const uploadFile = require("../config/multer");
 router
   .route("/")
   .get(objectControllers.index)
-  .post(uploadFile.single("load-excel"), objectControllers.loadExcelData);
+  .post(objectControllers.addNewObject);
+
+router.route("/new").get(objectControllers.renderNewObjectForm);
+
+router
+  .route("/load-excel")
+  .post(uploadFile.single("load-excel"), objectControllers.loadFromExcel);
 
 router.route("/:objectId").delete(objectControllers.deleteObject);
 

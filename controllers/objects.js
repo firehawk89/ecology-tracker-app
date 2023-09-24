@@ -1,6 +1,7 @@
 const readXlsxFile = require("read-excel-file/node");
 const catchAsyncError = require("../utils/catchAsyncError");
 const AppError = require("../utils/AppError");
+const objEmptyStrToNull = require("../utils/objEmptyStrToNull");
 const objectService = require("../services/object");
 
 module.exports.index = catchAsyncError(async (req, res, next) => {
@@ -9,7 +10,25 @@ module.exports.index = catchAsyncError(async (req, res, next) => {
   res.render("objects/index", { objectItems });
 });
 
-module.exports.loadExcelData = catchAsyncError(async (req, res, next) => {
+module.exports.renderNewObjectForm = (req, res, next) => {
+  res.render("objects/new");
+};
+
+module.exports.addNewObject = catchAsyncError(async (req, res, next) => {
+  const { object } = req.body;
+
+  const transformedObject = objEmptyStrToNull(object);
+
+  try {
+    await objectService.insertOne(transformedObject);
+  } catch {
+    throw new AppError("Entered data is invalid.", 422);
+  }
+
+  res.redirect("/objects");
+});
+
+module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   if (!req.file) {
     throw new AppError("File is not provided", 415);
   }
