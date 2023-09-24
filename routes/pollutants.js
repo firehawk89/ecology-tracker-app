@@ -7,7 +7,13 @@ const uploadFile = require("../config/multer");
 router
   .route("/")
   .get(pollutantControllers.index)
-  .post(uploadFile.single("load-excel"), pollutantControllers.loadExcelData);
+  .post(pollutantControllers.addNewPollutant);
+
+router.route("/new").get(pollutantControllers.renderNewPollutantForm);
+
+router
+  .route("/load-excel")
+  .post(uploadFile.single("load-excel"), pollutantControllers.loadFromExcel);
 
 router.route("/:pollutantId").delete(pollutantControllers.deletePollutant);
 
