@@ -17,8 +17,23 @@
       <main class="flex-grow-1 flex-shrink-1 flex">
         <section class="py-5">
           <div class="container-xl">
-            <h1 class="text-center mb-4">Забрудники</h1>
-            <% if (pollutantItems.length > 0) { %>
+            <div class="d-flex flex-wrap row-gap-2 p-3 border">
+              <div class="text-center text-sm-start col-12 col-sm-6">
+                <h1>Забрудники</h1>
+              </div>
+              <div
+                class="col-12 col-sm-6 d-flex flex-wrap justify-content-center justify-content-sm-end align-items-center gap-2"
+              >
+                <a class="btn btn-success" href="/pollutants/new"
+                  >Додати забрудник</a
+                >
+              </div>
+            </div>
+            <% if (pollutantItems.length <= 0) { %>
+            <div class="alert alert-info my-4">
+              <p class="text-center m-0 fs-6">Забрудники відсутні.</p>
+            </div>
+            <% } else { %>
             <div class="table-responsive">
               <table class="table table-striped table-bordered mb-5">
                 <thead>
@@ -45,7 +60,7 @@
                       <div class="d-flex flex-column gap-2">
                         <a
                           class="btn btn-sm btn-warning"
-                          href="/edit/<%= pollutant.pollutant_id %>"
+                          href="/pollutants/<%= pollutant.pollutant_id %>/edit"
                           >Edit</a
                         >
                         <form
@@ -67,31 +82,6 @@
               </table>
             </div>
             <% } %>
-            <form
-              class="form-validate d-flex flex-column gap-3 w-50 mx-auto"
-              action="/pollutants"
-              enctype="multipart/form-data"
-              method="post"
-              novalidate
-            >
-              <div>
-                <label class="form-label" for="formFile"
-                  >Оберіть Excel Файл</label
-                >
-                <input
-                  class="form-control"
-                  type="file"
-                  id="formFile"
-                  name="load-excel"
-                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                  required
-                />
-                <div class="invalid-feedback">Будь ласка, оберіть файл</div>
-              </div>
-              <button class="btn btn-primary" type="submit" value="Store File">
-                Завантажити дані з Excel файлу
-              </button>
-            </form>
           </div>
         </section>
       </main>
