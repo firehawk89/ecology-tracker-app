@@ -17,19 +17,23 @@
       <main class="flex-grow-1 flex-shrink-1 flex">
         <section class="py-5">
           <div class="container-xl">
-            <div class="d-flex p-3 border">
-              <div class="col-6">
+            <div class="d-flex flex-wrap row-gap-2 p-3 border">
+              <div class="text-center text-sm-start col-12 col-sm-6">
                 <h1>Забрудники</h1>
               </div>
               <div
-                class="col-6 d-flex flex-wrap justify-content-end align-items-center gap-2"
+                class="col-12 col-sm-6 d-flex flex-wrap justify-content-center justify-content-sm-end align-items-center gap-2"
               >
                 <a class="btn btn-success" href="/pollutants/new"
                   >Додати забрудник</a
                 >
               </div>
             </div>
-            <% if (pollutantItems.length > 0) { %>
+            <% if (pollutantItems.length <= 0) { %>
+            <div class="alert alert-info my-4">
+              <p class="text-center m-0 fs-6">Забрудники відсутні.</p>
+            </div>
+            <% } else { %>
             <div class="table-responsive">
               <table class="table table-striped table-bordered mb-5">
                 <thead>
