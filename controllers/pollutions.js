@@ -30,7 +30,7 @@ module.exports.addNewPollution = catchAsyncError(async (req, res, next) => {
 
 module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   if (!req.file) {
-    throw new AppError("File is not provided", 415);
+    throw new AppError("File is not provided.", 415);
   }
 
   const excelFile = process.cwd() + "/uploads/" + req.file.filename;
@@ -41,47 +41,54 @@ module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   try {
     await pollutionService.insertMany(rows);
   } catch {
-    throw new AppError("Number of columns doesn't match or data is invalid.");
+    throw new AppError(
+      "Number of columns doesn't match or data is invalid.",
+      422
+    );
   }
 
   res.redirect("/pollutions");
 });
 
-// module.exports.renderEditPollutantForm = catchAsyncError(
-//   async (req, res, next) => {
-//     const { pollutantId } = req.params;
+module.exports.renderEditPollutionForm = catchAsyncError(
+  async (req, res, next) => {
+    const { pollutionId } = req.params;
 
-//     if (isNaN(pollutantId)) {
-//       throw new AppError("Pollutant with given id not found.", 404);
-//     }
+    if (isNaN(pollutionId)) {
+      throw new AppError("Pollution with given id not found.", 404);
+    }
 
-//     const pollutant = await pollutionService.getById(pollutantId);
+    const pollution = await pollutionService.getById(pollutionId);
 
-//     if (!pollutant) {
-//       throw new AppError("Pollutant with given id not found.", 404);
-//     }
+    if (!pollution) {
+      throw new AppError("Pollution with given id not found.", 404);
+    }
 
-//     res.render("pollutions/edit", { pollutant });
-//   }
-// );
+    res.render("pollutions/edit", { pollution });
+  }
+);
 
-// module.exports.updatePollutant = catchAsyncError(async (req, res, next) => {
-//   const { pollutantId } = req.params;
-//   const { pollutant } = req.body;
+module.exports.updatePollution = catchAsyncError(async (req, res, next) => {
+  const { pollutionId } = req.params;
+  const { pollution } = req.body;
 
-//   const transformedPollutant = objEmptyStrToNull(pollutant);
+  const transformedPollution = objEmptyStrToNull(pollution);
 
-//   const result = await pollutionService.updateOneById(
-//     pollutantId,
-//     transformedPollutant
-//   );
+  try {
+    const result = await pollutionService.updateOneById(
+      pollutionId,
+      transformedPollution
+    );
 
-//   if (result === 0) {
-//     throw new AppError("Pollutant with given id not found.", 404);
-//   }
+    if (result === 0) {
+      throw new AppError("Pollution with given id not found.", 404);
+    }
+  } catch {
+    throw new AppError("Entered data is invalid.", 422);
+  }
 
-//   res.redirect("/pollutions");
-// });
+  res.redirect("/pollutions");
+});
 
 module.exports.deletePollution = catchAsyncError(async (req, res, next) => {
   const { pollutionId } = req.params;
