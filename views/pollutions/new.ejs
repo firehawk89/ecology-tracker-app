@@ -64,7 +64,11 @@
                   step="any"
                   id="pollutionValue"
                   name="pollution[value]"
+                  required
                 />
+                <div class="invalid-feedback">
+                  Будь ласка, введіть кількість викидів
+                </div>
               </div>
               <div>
                 <label class="form-label" for="pollutionYear">Рік</label>
@@ -73,7 +77,9 @@
                   type="number"
                   id="pollutionYear"
                   name="pollution[year]"
+                  required
                 />
+                <div class="invalid-feedback">Будь ласка, введіть рік</div>
               </div>
               <button class="btn btn-primary" type="submit">Відправити</button>
             </form>
