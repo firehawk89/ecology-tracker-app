@@ -22,9 +22,21 @@ module.exports.getById = async (id) => {
 };
 
 module.exports.insertOne = async (pollution) => {
+  const [foundObject] = await mysqlPool.query(
+    "SELECT object_id FROM object WHERE object_name = ?;",
+    [pollution.object]
+  );
+  const objectId = foundObject[0].object_id;
+
+  const [foundPollutant] = await mysqlPool.query(
+    "SELECT pollutant_id FROM pollutant WHERE pollutant_name = ?;",
+    [pollution.pollutant]
+  );
+  const pollutantId = foundPollutant[0].pollutant_id;
+
   await mysqlPool.query(
     "INSERT INTO pollution (object_id, pollutant_id, pollution_value, pollution_year) VALUES (?, ?, ?, ?);",
-    [pollution.object, pollution.pollutant, pollution.value, pollution.year]
+    [objectId, pollutantId, pollution.value, pollution.year]
   );
 };
 
