@@ -15,10 +15,10 @@ router
   .route("/load-excel")
   .post(uploadFile.single("load-excel"), pollutionControllers.loadFromExcel);
 
-router;
-//   .route("/:pollutantId")
-//   .put(pollutionControllers.updatePollutant)
-//   .delete(pollutionControllers.deletePollutant);
+router
+  .route("/:pollutionId")
+  //   .put(pollutionControllers.updatePollutant)
+  .delete(pollutionControllers.deletePollution);
 
 // router
 //   .route("/:pollutantId/edit")

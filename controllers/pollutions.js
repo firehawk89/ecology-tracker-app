@@ -83,10 +83,16 @@ module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
 //   res.redirect("/pollutions");
 // });
 
-// module.exports.deletePollutant = catchAsyncError(async (req, res, next) => {
-//   const { pollutantId } = req.params;
+module.exports.deletePollution = catchAsyncError(async (req, res, next) => {
+  const { pollutionId } = req.params;
 
-//   await pollutionService.deleteOneById(pollutantId);
+  console.log(pollutionId);
 
-//   res.redirect("/pollutions");
-// });
+  const result = await pollutionService.deleteOneById(pollutionId);
+
+  if (result === 0) {
+    throw new AppError("Pollution with given id not found.", 404);
+  }
+
+  res.redirect("/pollutions");
+});

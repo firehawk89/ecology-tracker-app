@@ -83,7 +83,11 @@ module.exports.updateObject = catchAsyncError(async (req, res, next) => {
 module.exports.deleteObject = catchAsyncError(async (req, res, next) => {
   const { objectId } = req.params;
 
-  await objectService.deleteOneById(objectId);
+  const result = await objectService.deleteOneById(objectId);
+
+  if (result === 0) {
+    throw new AppError("Object with given id not found.", 404);
+  }
 
   res.redirect("/objects");
 });

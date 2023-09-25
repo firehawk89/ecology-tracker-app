@@ -37,5 +37,9 @@ module.exports.updateOneById = async (id, pollution) => {
 };
 
 module.exports.deleteOneById = async (id) => {
-  await mysqlPool.query("DELETE FROM pollution WHERE pollution_id = ?", [id]);
+  const result = await mysqlPool.query(
+    "DELETE FROM pollution WHERE pollution_id = ?",
+    [id]
+  );
+  return result[0].affectedRows;
 };

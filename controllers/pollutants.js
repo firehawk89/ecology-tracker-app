@@ -89,7 +89,11 @@ module.exports.updatePollutant = catchAsyncError(async (req, res, next) => {
 module.exports.deletePollutant = catchAsyncError(async (req, res, next) => {
   const { pollutantId } = req.params;
 
-  await pollutantService.deleteOneById(pollutantId);
+  const result = await pollutantService.deleteOneById(pollutantId);
+
+  if (result === 0) {
+    throw new AppError("Pollutant with given id not found.", 404);
+  }
 
   res.redirect("/pollutants");
 });
