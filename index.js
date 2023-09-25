@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("*", (req, res, next) => {
-  next(new AppError("Page Not Found", 404));
+  res.render("404");
 });
 
 app.use((err, req, res, next) => {
