@@ -17,11 +17,11 @@ router
 
 router
   .route("/:pollutionId")
-  //   .put(pollutionControllers.updatePollutant)
+  .put(pollutionControllers.updatePollution)
   .delete(pollutionControllers.deletePollution);
 
-// router
-//   .route("/:pollutantId/edit")
-//   .get(pollutionControllers.renderEditPollutantForm);
+router
+  .route("/:pollutionId/edit")
+  .get(pollutionControllers.renderEditPollutionForm);
 
 module.exports = router;
