@@ -10,42 +10,42 @@ module.exports.index = catchAsyncError(async (req, res, next) => {
   res.render("pollutions/index", { pollutionItems });
 });
 
-// module.exports.renderNewPollutionForm = (req, res, next) => {
-//   res.render("pollutions/new");
-// };
+module.exports.renderNewPollutionForm = (req, res, next) => {
+  res.render("pollutions/new");
+};
 
-// module.exports.addNewPollution = catchAsyncError(async (req, res, next) => {
-//   const { pollution } = req.body;
+module.exports.addNewPollution = catchAsyncError(async (req, res, next) => {
+  const { pollution } = req.body;
 
-//   const transformedPollution = objEmptyStrToNull(pollution);
+  const transformedPollution = objEmptyStrToNull(pollution);
 
-//   try {
-//     await pollutionService.insertOne(transformedPollution);
-//   } catch {
-//     throw new AppError("Entered data is invalid.", 422);
-//   }
+  try {
+    await pollutionService.insertOne(transformedPollution);
+  } catch {
+    throw new AppError("Entered data is invalid.", 422);
+  }
 
-//   res.redirect("/pollutions");
-// });
+  res.redirect("/pollutions");
+});
 
-// module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
-//   if (!req.file) {
-//     throw new AppError("File is not provided", 415);
-//   }
+module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
+  if (!req.file) {
+    throw new AppError("File is not provided", 415);
+  }
 
-//   const excelFile = process.cwd() + "/uploads/" + req.file.filename;
+  const excelFile = process.cwd() + "/uploads/" + req.file.filename;
 
-//   const rows = await readXlsxFile(excelFile);
-//   rows.shift();
+  const rows = await readXlsxFile(excelFile);
+  rows.shift();
 
-//   try {
-//     await pollutionService.insertMany(rows);
-//   } catch {
-//     throw new AppError("Number of columns doesn't match or data is invalid.");
-//   }
+  try {
+    await pollutionService.insertMany(rows);
+  } catch {
+    throw new AppError("Number of columns doesn't match or data is invalid.");
+  }
 
-//   res.redirect("/pollutions");
-// });
+  res.redirect("/pollutions");
+});
 
 // module.exports.renderEditPollutantForm = catchAsyncError(
 //   async (req, res, next) => {
