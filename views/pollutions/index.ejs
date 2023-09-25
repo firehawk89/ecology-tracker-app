@@ -53,7 +53,7 @@
                     <td><%= pollution.object_id %></td>
                     <td><%= pollution.pollutant_id %></td>
                     <td><%= pollution.pollution_value %></td>
-                    <td><%= pollution.pollution_date %></td>
+                    <td><%= pollution.pollution_year %></td>
                     <td class="align-middle">
                       <div class="d-flex flex-column gap-2">
                         <a
@@ -64,10 +64,9 @@
                         <form
                           action="/pollutions/<%= pollution.pollution_id %>?_method=DELETE"
                           method="POST"
-                          style="display: inline"
                         >
                           <input
-                            class="btn btn-sm btn-danger"
+                            class="btn btn-sm btn-danger w-100"
                             type="submit"
                             value="Delete"
                           />
