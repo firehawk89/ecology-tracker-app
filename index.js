@@ -8,7 +8,6 @@ const PORT = 3000;
 const objectsRoutes = require("./routes/objects");
 const pollutantsRoutes = require("./routes/pollutants");
 const pollutionRoutes = require("./routes/pollutions");
-const AppError = require("./utils/AppError");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
