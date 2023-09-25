@@ -15,33 +15,23 @@ module.exports.getById = async (id) => {
 
 module.exports.insertOne = async (pollution) => {
   await mysqlPool.query(
-    "INSERT INTO pollution (object_id, pollutant_id, pollution_value, pollution_date) VALUES (?, ?, ?, ?, ?)",
-    [
-      pollution.objectName,
-      pollution.pollutantName,
-      pollution.value,
-      pollution.date,
-    ]
+    "INSERT INTO pollution (object_id, pollutant_id, pollution_value, pollution_year) VALUES (?, ?, ?, ?)",
+    [pollution.object, pollution.pollutant, pollution.value, pollution.year]
   );
 };
 
 module.exports.insertMany = async (rows) => {
+  console.log(rows);
   await mysqlPool.query(
-    "INSERT INTO pollutant (pollutant_name, min_mass_consumption, max_mass_consumption, gdk, danger_class) VALUES ?",
+    "INSERT INTO pollution (object_id, pollutant_id, pollution_value, pollution_year) VALUES ?",
     [rows]
   );
 };
 
 module.exports.updateOneById = async (id, pollution) => {
   const result = await mysqlPool.query(
-    "UPDATE pollution SET object_id = ?, pollutant_id = ?, pollution_value = ?, pollution_date = ? WHERE pollution_id = ?",
-    [
-      pollution.objectName,
-      pollution.pollutantName,
-      pollution.value,
-      pollution.date,
-      id,
-    ]
+    "UPDATE pollution SET object_id = ?, pollutant_id = ?, pollution_value = ?, pollution_year = ? WHERE pollution_id = ?",
+    [pollution.object, pollution.pollutant, pollution.value, pollution.year, id]
   );
   return result[0].affectedRows;
 };
