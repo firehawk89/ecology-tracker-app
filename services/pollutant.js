@@ -13,6 +13,16 @@ module.exports.getById = async (id) => {
   return row[0];
 };
 
+module.exports.getIdByName = async (name) => {
+  const [foundRow] = await mysqlPool.query(
+    "SELECT pollutant_id FROM pollutant WHERE pollutant_name = ?;",
+    [name]
+  );
+  const id = foundRow[0].pollutant_id;
+
+  return id;
+};
+
 module.exports.insertOne = async (pollutant) => {
   await mysqlPool.query(
     "INSERT INTO pollutant (pollutant_name, min_mass_consumption, max_mass_consumption, gdk, danger_class) VALUES (?, ?, ?, ?, ?);",

@@ -30,7 +30,7 @@ module.exports.addNewPollutant = catchAsyncError(async (req, res, next) => {
 
 module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   if (!req.file) {
-    throw new AppError("File is not provided", 415);
+    throw new AppError("File is not provided.", 415);
   }
 
   const excelFile = process.cwd() + "/uploads/" + req.file.filename;
