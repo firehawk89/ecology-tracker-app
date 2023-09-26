@@ -5,6 +5,11 @@ module.exports.getAll = async () => {
   return rows;
 };
 
+module.exports.getNames = async () => {
+  const [rows] = await mysqlPool.query("SELECT object_name FROM object;");
+  return rows;
+}
+
 module.exports.getById = async (id) => {
   const [row] = await mysqlPool.query(
     "SELECT * FROM object WHERE object_id = ?;",
