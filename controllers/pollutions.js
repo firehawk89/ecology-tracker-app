@@ -3,6 +3,7 @@ const catchAsyncError = require("../utils/catchAsyncError");
 const AppError = require("../utils/AppError");
 const objEmptyStrToNull = require("../utils/objEmptyStrToNull");
 const pollutionService = require("../services/pollution");
+const pollutantService = require("../services/pollutant")
 
 module.exports.index = catchAsyncError(async (req, res, next) => {
   const pollutionItems = await pollutionService.getAll();
@@ -10,9 +11,10 @@ module.exports.index = catchAsyncError(async (req, res, next) => {
   res.render("pollutions/index", { pollutionItems });
 });
 
-module.exports.renderNewPollutionForm = (req, res, next) => {
-  res.render("pollutions/new");
-};
+module.exports.renderNewPollutionForm = catchAsyncError(async (req, res, next) => {
+  const pollutants = await pollutantService.getNames();
+  res.render("pollutions/new", {pollutants});
+});
 
 module.exports.addNewPollution = catchAsyncError(async (req, res, next) => {
   const { pollution } = req.body;
