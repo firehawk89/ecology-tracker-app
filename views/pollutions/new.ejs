@@ -28,22 +28,27 @@
                 <label class="form-label" for="objectName"
                   >Назва підприємства <span class="text-danger">*</span></label
                 >
-                <input
+                <!-- <input
                   class="form-control"
                   type="text"
                   id="objectName"
                   name="pollution[object]"
                   required
-                />
+                /> -->
+                <select class="form-select" id="objectName" name="pollution[object]" required>
+                  <% objects.forEach(object => { %>
+                    <option value="<%= object.object_name %>"><%= object.object_name %></option>
+                  <% }) %>
+                </select>
                 <div class="invalid-feedback">
                   Будь ласка, введіть назву підприємства
                 </div>
               </div>
               <div>
-                <!-- <label class="form-label" for="pollutionPollutant"
+                <label class="form-label" for="pollutionPollutant"
                   >Назва забрудника <span class="text-danger">*</span></label
                 >
-                <input
+                <!-- <input
                   class="form-control"
                   type="text"
                   id="pollutionPollutant"
@@ -52,7 +57,7 @@
                 /> -->
                 <select name="pollution[pollutant]" id="pollutionPollutant" class="form-select" required>
                   <% pollutants.forEach(pollutant => {%>
-                  <option <% if(pollutant.pollutant_name === 'Інші речовини') {%> selected <%} %>><%= pollutant.pollutant_name %></option>
+                  <option value="<%= pollutant.pollutant_name %>" <% if(pollutant.pollutant_name === 'Інші речовини') {%> selected <%} %>><%= pollutant.pollutant_name %></option>
                   <% }) %>
                 </select>
                 <div class="invalid-feedback">
