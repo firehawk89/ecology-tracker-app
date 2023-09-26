@@ -40,7 +40,7 @@
                 </div>
               </div>
               <div>
-                <label class="form-label" for="pollutionPollutant"
+                <!-- <label class="form-label" for="pollutionPollutant"
                   >Назва забрудника <span class="text-danger">*</span></label
                 >
                 <input
@@ -49,7 +49,12 @@
                   id="pollutionPollutant"
                   name="pollution[pollutant]"
                   required
-                />
+                /> -->
+                <select name="pollution[pollutant]" id="pollutionPollutant" class="form-select" required>
+                  <% pollutants.forEach(pollutant => {%>
+                  <option <% if(pollutant.pollutant_name === 'Інші речовини') {%> selected <%} %>><%= pollutant.pollutant_name %></option>
+                  <% }) %>
+                </select>
                 <div class="invalid-feedback">
                   Будь ласка, введіть назву забрудника
                 </div>
