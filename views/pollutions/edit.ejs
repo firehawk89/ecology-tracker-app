@@ -85,6 +85,23 @@
                 />
                 <div class="invalid-feedback">Будь ласка, введіть рік</div>
               </div>
+              <div>
+                <label class="form-label" for="pollutionConcentration"
+                  >Концентрація</label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  step="any"
+                  id="pollutionConcentration"
+                  name="pollution[concentration]"
+                  value="<%= pollution.concentration %>"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Будь ласка, введіть значення концентрації (мг/куб. м)
+                </div>
+              </div>
               <button class="btn btn-primary" type="submit">Відправити</button>
             </form>
           </div>
