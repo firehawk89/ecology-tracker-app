@@ -2,21 +2,23 @@ const readXlsxFile = require("read-excel-file/node");
 const catchAsyncError = require("../utils/catchAsyncError");
 const AppError = require("../utils/AppError");
 const objEmptyStrToNull = require("../utils/objEmptyStrToNull");
-const pollutionService = require("../services/pollution");
-const pollutantService = require("../services/pollutant")
-const objectService = require("../services/object")
+const pollutionServices = require("../services/pollution.services");
+const pollutantServices = require("../services/pollutant.services");
+const objectServices = require("../services/object.services");
 
 module.exports.index = catchAsyncError(async (req, res, next) => {
-  const pollutionItems = await pollutionService.getAll();
+  const pollutionItems = await pollutionServices.getAll();
 
   res.render("pollutions/index", { pollutionItems });
 });
 
-module.exports.renderNewPollutionForm = catchAsyncError(async (req, res, next) => {
-  const pollutants = await pollutantService.getNames();
-  const objects = await objectService.getNames();
-  res.render("pollutions/new", {pollutants, objects});
-});
+module.exports.renderNewPollutionForm = catchAsyncError(
+  async (req, res, next) => {
+    const pollutants = await pollutantServices.getNames();
+    const objects = await objectServices.getNames();
+    res.render("pollutions/new", { pollutants, objects });
+  }
+);
 
 module.exports.addNewPollution = catchAsyncError(async (req, res, next) => {
   const { pollution } = req.body;
@@ -24,7 +26,7 @@ module.exports.addNewPollution = catchAsyncError(async (req, res, next) => {
   const transformedPollution = objEmptyStrToNull(pollution);
 
   try {
-    await pollutionService.insertOne(transformedPollution);
+    await pollutionServices.insertOne(transformedPollution);
   } catch {
     throw new AppError("Entered data is invalid.", 422);
   }
@@ -43,7 +45,7 @@ module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   rows.shift();
 
   try {
-    await pollutionService.insertMany(rows);
+    await pollutionServices.insertMany(rows);
   } catch {
     throw new AppError(
       "Number of columns doesn't match or data is invalid.",
@@ -62,7 +64,7 @@ module.exports.renderEditPollutionForm = catchAsyncError(
       throw new AppError("Pollution with given id not found.", 404);
     }
 
-    const pollution = await pollutionService.getById(pollutionId);
+    const pollution = await pollutionServices.getById(pollutionId);
 
     if (!pollution) {
       throw new AppError("Pollution with given id not found.", 404);
@@ -79,7 +81,7 @@ module.exports.updatePollution = catchAsyncError(async (req, res, next) => {
   const transformedPollution = objEmptyStrToNull(pollution);
 
   try {
-    const result = await pollutionService.updateOneById(
+    const result = await pollutionServices.updateOneById(
       pollutionId,
       transformedPollution
     );
@@ -99,7 +101,7 @@ module.exports.deletePollution = catchAsyncError(async (req, res, next) => {
 
   console.log(pollutionId);
 
-  const result = await pollutionService.deleteOneById(pollutionId);
+  const result = await pollutionServices.deleteOneById(pollutionId);
 
   if (result === 0) {
     throw new AppError("Pollution with given id not found.", 404);
