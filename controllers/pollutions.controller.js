@@ -99,8 +99,6 @@ module.exports.updatePollution = catchAsyncError(async (req, res, next) => {
 module.exports.deletePollution = catchAsyncError(async (req, res, next) => {
   const { pollutionId } = req.params;
 
-  console.log(pollutionId);
-
   const result = await pollutionServices.deleteOneById(pollutionId);
 
   if (result === 0) {
