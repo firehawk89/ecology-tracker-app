@@ -44,6 +44,9 @@
                     <th scope="col">Макс. показник масової витрати (т/рік)</th>
                     <th scope="col">ГДК (мг/м<sup>3</sup>)</th>
                     <th scope="col">Клас небезпеки</th>
+                    <th scope="col">RFC</th>
+                    <th scope="col">SFI</th>
+                    <th scope="col">Критичні органи/системи</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -56,6 +59,9 @@
                     <td><%= pollutant.max_mass_consumption %></td>
                     <td><%= pollutant.gdk %></td>
                     <td><%= pollutant.danger_class %></td>
+                    <td><%= pollutant.rfc %></td>
+                    <td><%= pollutant.sfi %></td>
+                    <td><%= pollutant.critic_organs %></td>
                     <td class="align-middle">
                       <div class="d-flex flex-column gap-2">
                         <a
