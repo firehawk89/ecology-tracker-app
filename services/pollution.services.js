@@ -1,5 +1,5 @@
 const mysqlPool = require("../config/db");
-const pollutantService = require("./pollutant");
+const pollutantServices = require("./pollutant.services");
 
 module.exports.getAll = async () => {
   const [rows] = await mysqlPool.query(
@@ -40,7 +40,7 @@ module.exports.getIdByName = async (name) => {
 
 module.exports.insertOne = async (pollution) => {
   const objectId = await this.getIdByName(pollution.object);
-  const pollutantId = await pollutantService.getIdByName(pollution.pollutant);
+  const pollutantId = await pollutantServices.getIdByName(pollution.pollutant);
 
   await mysqlPool.query(
     "INSERT INTO pollution (object_id, pollutant_id, pollution_value, pollution_year) VALUES (?, ?, ?, ?);",
@@ -58,7 +58,7 @@ module.exports.insertMany = async (rows) => {
 
 module.exports.updateOneById = async (id, pollution) => {
   const objectId = await this.getIdByName(pollution.object);
-  const pollutantId = await pollutantService.getIdByName(pollution.pollutant);
+  const pollutantId = await pollutantServices.getIdByName(pollution.pollutant);
 
   const result = await mysqlPool.query(
     "UPDATE pollution SET object_id = ?, pollutant_id = ?, pollution_value = ?, pollution_year = ? WHERE pollution_id = ?;",

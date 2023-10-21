@@ -5,9 +5,9 @@ const methodOverride = require("method-override");
 const app = express();
 const PORT = 3000;
 
-const objectsRoutes = require("./routes/objects");
-const pollutantsRoutes = require("./routes/pollutants");
-const pollutionRoutes = require("./routes/pollutions");
+const objectsRoutes = require("./routes/objects.routes");
+const pollutantsRoutes = require("./routes/pollutants.routes");
+const pollutionRoutes = require("./routes/pollutions.routes");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

@@ -2,10 +2,10 @@ const readXlsxFile = require("read-excel-file/node");
 const catchAsyncError = require("../utils/catchAsyncError");
 const AppError = require("../utils/AppError");
 const objEmptyStrToNull = require("../utils/objEmptyStrToNull");
-const objectService = require("../services/object");
+const objectServices = require("../services/object.services");
 
 module.exports.index = catchAsyncError(async (req, res, next) => {
-  const objectItems = await objectService.getAll();
+  const objectItems = await objectServices.getAll();
 
   res.render("objects/index", { objectItems });
 });
@@ -20,7 +20,7 @@ module.exports.addNewObject = catchAsyncError(async (req, res, next) => {
   const transformedObject = objEmptyStrToNull(object);
 
   try {
-    await objectService.insertOne(transformedObject);
+    await objectServices.insertOne(transformedObject);
   } catch {
     throw new AppError("Entered data is invalid.", 422);
   }
@@ -39,7 +39,7 @@ module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   rows.shift();
 
   try {
-    await objectService.insertMany(rows);
+    await objectServices.insertMany(rows);
   } catch {
     throw new AppError("Number of columns doesn't match or data is invalid.");
   }
@@ -55,7 +55,7 @@ module.exports.renderEditObjectForm = catchAsyncError(
       throw new AppError("Object with given id not found.", 404);
     }
 
-    const object = await objectService.getById(objectId);
+    const object = await objectServices.getById(objectId);
 
     if (!object) {
       throw new AppError("Object with given id not found.", 404);
@@ -71,7 +71,10 @@ module.exports.updateObject = catchAsyncError(async (req, res, next) => {
 
   const transformedObject = objEmptyStrToNull(object);
 
-  const result = await objectService.updateOneById(objectId, transformedObject);
+  const result = await objectServices.updateOneById(
+    objectId,
+    transformedObject
+  );
 
   if (result === 0) {
     throw new AppError("Object with given id not found.", 404);
@@ -83,7 +86,7 @@ module.exports.updateObject = catchAsyncError(async (req, res, next) => {
 module.exports.deleteObject = catchAsyncError(async (req, res, next) => {
   const { objectId } = req.params;
 
-  const result = await objectService.deleteOneById(objectId);
+  const result = await objectServices.deleteOneById(objectId);
 
   if (result === 0) {
     throw new AppError("Object with given id not found.", 404);
