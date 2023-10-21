@@ -38,8 +38,8 @@ module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   const rows = await readXlsxFile(excelFile);
   rows.shift();
 
-  //   // Store only necessary columns
-  //   rows.forEach((row) => row.splice(5));
+  // Store only necessary columns
+  rows.forEach((row) => row.splice(8));
 
   try {
     await pollutantServices.insertMany(rows);
