@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecology App - вплив речовин</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="wrapper min-vh-100 d-flex flex-column">
+      <%- include('../partials/header.ejs') %>
+      <main class="flex-grow-1 flex-shrink-1 flex">
+        <section class="py-5">
+          <div class="container-xl">
+            <div class="d-flex flex-wrap row-gap-2 p-3 border border-bottom-0">
+              <div class="text-center text-sm-start col-12 col-sm-6">
+                <h1>Вплив стану повітря на здоров'я людей</h1>
+              </div>
+              <div
+                class="col-12 col-sm-6 d-flex flex-wrap justify-content-center justify-content-sm-end align-items-center gap-2"
+              >
+                <a class="btn btn-success" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+                  >Кнопка, яка (не) працює</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <%- include('../partials/footer.ejs') %>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/setActiveNavLink.js"></script>
+    <script src="/js/validateForms.js"></script>
+  </body>
+  </body>
+</html>

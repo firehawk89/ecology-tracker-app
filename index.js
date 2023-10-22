@@ -5,6 +5,7 @@ const methodOverride = require("method-override");
 const app = express();
 const PORT = 3000;
 
+const impactRoutes = require("./routes/impact");
 const objectsRoutes = require("./routes/objects.routes");
 const pollutantsRoutes = require("./routes/pollutants.routes");
 const pollutionRoutes = require("./routes/pollutions.routes");
@@ -19,6 +20,7 @@ app.use(methodOverride("_method"));
 app.use("/objects", objectsRoutes);
 app.use("/pollutants", pollutantsRoutes);
 app.use("/pollutions", pollutionRoutes);
+app.use("/impact", impactRoutes);
 
 app.get("/", (req, res) => {
   res.render("home", { message: "Hello, world!" });
