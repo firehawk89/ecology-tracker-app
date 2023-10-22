@@ -11,6 +11,14 @@
       crossorigin="anonymous"
     />
   </head>
+  <style>
+    .select-css option {
+      width: 100px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  </style>
   <body>
     <div class="wrapper min-vh-100 d-flex flex-column">
       <%- include('../partials/header.ejs') %>
@@ -28,18 +36,18 @@
                 <label class="form-label" for="objectName"
                   >Назва підприємства <span class="text-danger">*</span></label
                 >
-                <!-- <input
+                <input
                   class="form-control"
-                  type="text"
+                  list="objectList"
                   id="objectName"
-                  name="pollution[object]"
+                  placeholder="Шукати підприємство..."
                   required
-                /> -->
-                <select class="form-select" id="objectName" name="pollution[object]" required>
+                />
+                <datalist id="objectList">
                   <% objects.forEach(object => { %>
-                    <option value="<%= object.object_name %>"><%= object.object_name %></option>
+                  <option value="<%=object.object_name %>"></option>
                   <% }) %>
-                </select>
+                </datalist>
                 <div class="invalid-feedback">
                   Будь ласка, введіть назву підприємства
                 </div>
@@ -48,25 +56,26 @@
                 <label class="form-label" for="pollutionPollutant"
                   >Назва забрудника <span class="text-danger">*</span></label
                 >
-                <!-- <input
+                <input
                   class="form-control"
-                  type="text"
+                  list="pollutantList"
                   id="pollutionPollutant"
-                  name="pollution[pollutant]"
+                  placeholder="Шукати забрудник..."
                   required
-                /> -->
-                <select name="pollution[pollutant]" id="pollutionPollutant" class="form-select" required>
-                  <% pollutants.forEach(pollutant => {%>
-                  <option value="<%= pollutant.pollutant_name %>" <% if(pollutant.pollutant_name === 'Інші речовини') {%> selected <%} %>><%= pollutant.pollutant_name %></option>
+                />
+                <datalist id="pollutantList">
+                  <% pollutants.forEach(pollutant => { %>
+                  <option value="<%=pollutant.pollutant_name %>"></option>
                   <% }) %>
-                </select>
+                </datalist>
                 <div class="invalid-feedback">
                   Будь ласка, введіть назву забрудника
                 </div>
               </div>
               <div>
                 <label class="form-label" for="pollutionValue"
-                  >Кількість викидів (т/рік)</label
+                  >Кількість викидів (т/рік)
+                  <span class="text-danger">*</span></label
                 >
                 <input
                   class="form-control"
@@ -81,7 +90,9 @@
                 </div>
               </div>
               <div>
-                <label class="form-label" for="pollutionYear">Рік</label>
+                <label class="form-label" for="pollutionYear"
+                  >Рік <span class="text-danger">*</span></label
+                >
                 <input
                   class="form-control"
                   type="number"

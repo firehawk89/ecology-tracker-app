@@ -30,20 +30,23 @@ module.exports.getIdByName = async (name) => {
 
 module.exports.insertOne = async (pollutant) => {
   await mysqlPool.query(
-    "INSERT INTO pollutant (pollutant_name, min_mass_consumption, max_mass_consumption, gdk, danger_class) VALUES (?, ?, ?, ?, ?);",
+    "INSERT INTO pollutant (pollutant_name, min_mass_consumption, max_mass_consumption, gdk, danger_class, rfc, sfi, critic_organs) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
     [
       pollutant.name,
       pollutant.minMassCons,
       pollutant.maxMassCons,
       pollutant.gdk,
       pollutant.dangerClass,
+      pollutant.rfc,
+      pollutant.sfi,
+      pollutant.criticOrgans,
     ]
   );
 };
 
 module.exports.insertMany = async (rows) => {
   await mysqlPool.query(
-    "INSERT INTO pollutant (pollutant_name, min_mass_consumption, max_mass_consumption, gdk, danger_class) VALUES ?;",
+    "INSERT INTO pollutant (pollutant_name, min_mass_consumption, max_mass_consumption, gdk, danger_class, rfc, sfi, critic_organs) VALUES ?;",
     [rows]
   );
 };
@@ -55,7 +58,10 @@ module.exports.updateOneById = async (id, pollutant) => {
 	min_mass_consumption = ?, 
 	max_mass_consumption = ?, 
 	gdk = ?, 
-	danger_class = ? 
+	danger_class = ?,
+	rfc = ?,
+	sfi = ?,
+	critic_organs = ?
 	WHERE pollutant_id = ?;`,
     [
       pollutant.name,
@@ -63,6 +69,9 @@ module.exports.updateOneById = async (id, pollutant) => {
       pollutant.maxMassCons,
       pollutant.gdk,
       pollutant.dangerClass,
+      pollutant.rfc,
+      pollutant.sfi,
+      pollutant.critic_organs,
       id,
     ]
   );

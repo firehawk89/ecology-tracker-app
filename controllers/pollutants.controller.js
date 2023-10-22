@@ -2,10 +2,10 @@ const readXlsxFile = require("read-excel-file/node");
 const catchAsyncError = require("../utils/catchAsyncError");
 const AppError = require("../utils/AppError");
 const objEmptyStrToNull = require("../utils/objEmptyStrToNull");
-const pollutantService = require("../services/pollutant");
+const pollutantServices = require("../services/pollutant.services");
 
 module.exports.index = catchAsyncError(async (req, res, next) => {
-  const pollutantItems = await pollutantService.getAll();
+  const pollutantItems = await pollutantServices.getAll();
 
   res.render("pollutants/index", { pollutantItems });
 });
@@ -20,7 +20,7 @@ module.exports.addNewPollutant = catchAsyncError(async (req, res, next) => {
   const transformedPollutant = objEmptyStrToNull(pollutant);
 
   try {
-    await pollutantService.insertOne(transformedPollutant);
+    await pollutantServices.insertOne(transformedPollutant);
   } catch {
     throw new AppError("Entered data is invalid.", 422);
   }
@@ -39,10 +39,10 @@ module.exports.loadFromExcel = catchAsyncError(async (req, res, next) => {
   rows.shift();
 
   // Store only necessary columns
-  rows.forEach((row) => row.splice(5));
+  rows.forEach((row) => row.splice(8));
 
   try {
-    await pollutantService.insertMany(rows);
+    await pollutantServices.insertMany(rows);
   } catch {
     throw new AppError("Number of columns doesn't match or data is invalid.");
   }
@@ -58,7 +58,7 @@ module.exports.renderEditPollutantForm = catchAsyncError(
       throw new AppError("Pollutant with given id not found.", 404);
     }
 
-    const pollutant = await pollutantService.getById(pollutantId);
+    const pollutant = await pollutantServices.getById(pollutantId);
 
     if (!pollutant) {
       throw new AppError("Pollutant with given id not found.", 404);
@@ -74,7 +74,7 @@ module.exports.updatePollutant = catchAsyncError(async (req, res, next) => {
 
   const transformedPollutant = objEmptyStrToNull(pollutant);
 
-  const result = await pollutantService.updateOneById(
+  const result = await pollutantServices.updateOneById(
     pollutantId,
     transformedPollutant
   );
@@ -89,7 +89,7 @@ module.exports.updatePollutant = catchAsyncError(async (req, res, next) => {
 module.exports.deletePollutant = catchAsyncError(async (req, res, next) => {
   const { pollutantId } = req.params;
 
-  const result = await pollutantService.deleteOneById(pollutantId);
+  const result = await pollutantServices.deleteOneById(pollutantId);
 
   if (result === 0) {
     throw new AppError("Pollutant with given id not found.", 404);
