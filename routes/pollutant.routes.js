@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const pollutantController = require("../controllers/pollutants.controller");
+const pollutantController = require("../controllers/pollutant.controller");
 const uploadFile = require("../config/multer");
 
 router
