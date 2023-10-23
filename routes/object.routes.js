@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const objectController = require("../controllers/objects.controller");
+const objectController = require("../controllers/object.controller");
 const uploadFile = require("../config/multer");
 
 router
