@@ -5,10 +5,10 @@ const methodOverride = require("method-override");
 const app = express();
 const PORT = 3000;
 
-const impactRoutes = require("./routes/impact");
-const objectsRoutes = require("./routes/objects.routes");
-const pollutantsRoutes = require("./routes/pollutants.routes");
-const pollutionRoutes = require("./routes/pollutions.routes");
+const objectsRoutes = require("./routes/object.routes");
+const pollutantsRoutes = require("./routes/pollutant.routes");
+const pollutionRoutes = require("./routes/pollution.routes");
+const impactRoutes = require("./routes/impact.routes");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
