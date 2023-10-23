@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ecology App - Забрудники</title>
+    <title>Ecology App - Населення</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -18,22 +18,22 @@
         <section class="py-5">
           <div class="container-xl">
             <div
-              class="d-flex flex-wrap row-gap-2 p-3 border <% if (pollutantItems.length > 0) { %> border-bottom-0 <% } %>"
+              class="d-flex flex-wrap row-gap-2 p-3 border <% if (populationItems.length > 0) { %> border-bottom-0 <% } %>"
             >
               <div class="text-center text-sm-start col-12 col-sm-6">
-                <h1>Забрудники</h1>
+                <h1>Населення</h1>
               </div>
               <div
                 class="col-12 col-sm-6 d-flex flex-wrap justify-content-center justify-content-sm-end align-items-center gap-2"
               >
-                <a class="btn btn-success" href="/pollutants/new"
-                  >Додати забрудник</a
+                <a class="btn btn-success" href="/population/new"
+                  >Додати запис про населення</a
                 >
               </div>
             </div>
-            <% if (pollutantItems.length <= 0) { %>
+            <% if (populationItems.length <= 0) { %>
             <div class="alert alert-info my-4">
-              <p class="text-center m-0 fs-6">Забрудники відсутні.</p>
+              <p class="text-center m-0 fs-6">Записи населення відсутні.</p>
             </div>
             <% } else { %>
             <div class="table-responsive">
@@ -41,38 +41,26 @@
                 <thead>
                   <tr class="align-middle">
                     <th scope="col">#</th>
-                    <th scope="col">Назва</th>
-                    <th scope="col">Мін. показник масової витрати (т/рік)</th>
-                    <th scope="col">Макс. показник масової витрати (т/рік)</th>
-                    <th scope="col">ГДК (мг/м<sup>3</sup>)</th>
-                    <th scope="col">Клас небезпеки</th>
-                    <th scope="col">RFC</th>
-                    <th scope="col">SFI</th>
-                    <th scope="col">Критичні органи/системи</th>
+                    <th scope="col">Кількість населення (чол.)</th>
+                    <th scope="col">Рік</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% pollutantItems.forEach(pollutant => { %>
+                  <% populationItems.forEach(population => { %>
                   <tr>
-                    <th scope="row"><%= pollutant.pollutant_id %></th>
-                    <td><%= pollutant.pollutant_name %></td>
-                    <td><%= pollutant.min_mass_consumption %></td>
-                    <td><%= pollutant.max_mass_consumption %></td>
-                    <td><%= pollutant.gdk %></td>
-                    <td><%= pollutant.danger_class %></td>
-                    <td><%= pollutant.rfc %></td>
-                    <td><%= pollutant.sfi %></td>
-                    <td><%= pollutant.critic_organs %></td>
+                    <th scope="row"><%= population.population_id %></th>
+                    <td><%= population.population_number %></td>
+                    <td><%= population.population_year %></td>
                     <td class="align-middle">
                       <div class="d-flex flex-column gap-2">
                         <a
                           class="btn btn-sm btn-warning"
-                          href="/pollutants/<%= pollutant.pollutant_id %>/edit"
+                          href="/population/<%= population.population_id %>/edit"
                           >Edit</a
                         >
                         <form
-                          action="/pollutants/<%= pollutant.pollutant_id %>?_method=DELETE"
+                          action="/population/<%= population.population_id %>?_method=DELETE"
                           method="POST"
                         >
                           <input
