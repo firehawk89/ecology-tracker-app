@@ -1,5 +1,8 @@
 const catchAsyncError = require("../utils/catchAsyncError");
+const objectServices = require("../services/object.services");
 
 module.exports.index = catchAsyncError(async (req, res, next) => {
-    res.render("impact/index");
+  const objects = await objectServices.getNames();
+
+  res.render("impact/index", { objects });
 });
