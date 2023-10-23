@@ -17,18 +17,55 @@
       <main class="flex-grow-1 flex-shrink-1 flex">
         <section class="py-5">
           <div class="container-xl">
-            <div class="d-flex flex-wrap row-gap-2 p-3 border border-bottom-0">
-              <div class="text-center text-sm-start col-12 col-sm-6">
-                <h1>Вплив стану повітря на здоров'я людей</h1>
-              </div>
-              <div
-                class="col-12 col-sm-6 d-flex flex-wrap justify-content-center justify-content-sm-end align-items-center gap-2"
-              >
-                <a class="btn btn-success" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
-                  >Кнопка, яка (не) працює</a
-                >
-              </div>
+            <div class="text-center">
+              <h1>Вплив стану повітря на здоров'я людей</h1>
             </div>
+            <form
+              class="mt-4 form-validate d-flex flex-column gap-3 col-12 col-sm-8 col-md-7 col-lg-6 col-xl-5 mx-auto"
+              action="/impact"
+              method="POST"
+              novalidate
+            >
+              <div>
+                <label class="form-label" for="objectName"
+                  >Назва підприємства <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  list="objectList"
+                  id="objectName"
+                  name="impact[object]"
+                  placeholder="Шукати підприємство..."
+                  required
+                />
+                <datalist id="objectList">
+                  <% objects.forEach(object => { %>
+                  <option value="<%=object.object_name %>"></option>
+                  <% }) %>
+                </datalist>
+                <div class="invalid-feedback">
+                  Будь ласка, введіть назву підприємства
+                </div>
+              </div>
+              <div>
+                <label class="form-label" for="year"
+                  >Рік <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  min="2016"
+                  max="2021"
+                  id="year"
+                  name="impact[year]"
+                  required
+                />
+                <div class="invalid-feedback">Будь ласка, введіть рік</div>
+              </div>
+              <button class="btn btn-primary" type="submit">
+                Оцінити вплив
+              </button>
+            </form>
           </div>
         </section>
       </main>
@@ -41,6 +78,5 @@
     ></script>
     <script src="/js/setActiveNavLink.js"></script>
     <script src="/js/validateForms.js"></script>
-  </body>
   </body>
 </html>

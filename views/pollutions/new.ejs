@@ -40,6 +40,7 @@
                   class="form-control"
                   list="objectList"
                   id="objectName"
+                  name="pollution[object]"
                   placeholder="Шукати підприємство..."
                   required
                 />
@@ -60,6 +61,7 @@
                   class="form-control"
                   list="pollutantList"
                   id="pollutionPollutant"
+                  name="pollution[pollutant]"
                   placeholder="Шукати забрудник..."
                   required
                 />
@@ -101,6 +103,22 @@
                   required
                 />
                 <div class="invalid-feedback">Будь ласка, введіть рік</div>
+              </div>
+              <div>
+                <label class="form-label" for="pollutionConcentration"
+                  >Концентрація</label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  step="any"
+                  id="pollutionConcentration"
+                  name="pollution[concentration]"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Будь ласка, введіть значення концентрації (мг/куб. м)
+                </div>
               </div>
               <button class="btn btn-primary" type="submit">Відправити</button>
             </form>
