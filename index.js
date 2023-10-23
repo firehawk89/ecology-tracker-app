@@ -8,6 +8,7 @@ const PORT = 3000;
 const objectsRoutes = require("./routes/object.routes");
 const pollutantsRoutes = require("./routes/pollutant.routes");
 const pollutionRoutes = require("./routes/pollution.routes");
+const populationRoutes = require("./routes/population.routes");
 const impactRoutes = require("./routes/impact.routes");
 
 app.set("view engine", "ejs");
@@ -20,6 +21,7 @@ app.use(methodOverride("_method"));
 app.use("/objects", objectsRoutes);
 app.use("/pollutants", pollutantsRoutes);
 app.use("/pollutions", pollutionRoutes);
+app.use("/population", populationRoutes);
 app.use("/impact", impactRoutes);
 
 app.get("/", (req, res) => {
