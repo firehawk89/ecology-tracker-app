@@ -66,6 +66,105 @@
                 Оцінити вплив
               </button>
             </form>
+            <div class="mt-5">
+              <% if (typeof nonCarcinogenicRisks != 'undefined') { %>
+              <hr class="mt-5" />
+              <% if (nonCarcinogenicRisks.length > 0) { %>
+              <div class="mt-5">
+                <h2 class="text-center">Неканцерогенний вплив</h2>
+                <div class="table-responsive mt-3">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr class="align-middle">
+                        <th scope="col">#</th>
+                        <th scope="col">Забрудник</th>
+                        <th scope="col">Кількість викидів (т/рік)</th>
+                        <th scope="col">Концентрація</th>
+                        <th scope="col">RFC</th>
+                        <th scope="col">Клас небезпеки</th>
+                        <th scope="col">HQ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% nonCarcinogenicRisks.forEach((risk, index) => { %>
+                      <tr>
+                        <th scope="row"><%= index + 1 %></th>
+                        <th class="fw-normal"><%= risk.pollutant_name %></th>
+                        <td><%= risk.pollution_value %></td>
+                        <td><%= risk.concentration %></td>
+                        <td><%= risk.rfc %></td>
+                        <td><%= risk.danger_class %></td>
+                        <td><%= risk.hq %></td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <% if (typeof hq != 'undefined') { %>
+              <p class="text-center fs-5 mt-2">
+                <span class="fw-medium">HQ Sum:</span> <%= hq %>
+              </p>
+              <% } } else { %>
+              <p class="fs-5 text-center fw-medium mt-5">
+                Інформація про неканцерогенний вплив відстуня
+              </p>
+              <% } } %> <% if (typeof carcinogenicRisks != 'undefined') { %>
+              <hr class="mt-5" />
+              <% if (carcinogenicRisks.length > 0) { %>
+              <div class="mt-5">
+                <h2 class="text-center">Канцерогенний вплив</h2>
+                <div class="table-responsive mt-3">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr class="align-middle">
+                        <th scope="col">#</th>
+                        <th scope="col">Забрудник</th>
+                        <th scope="col">Кількість викидів (т/рік)</th>
+                        <th scope="col">Концентрація</th>
+                        <th scope="col">SFI</th>
+                        <th scope="col">Клас небезпеки</th>
+                        <th scope="col">UR</th>
+                        <th scope="col">CR</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% carcinogenicRisks.forEach((risk, index) => { %>
+                      <tr>
+                        <th scope="row"><%= index + 1 %></th>
+                        <th class="fw-normal"><%= risk.pollutant_name %></th>
+                        <td><%= risk.pollution_value %></td>
+                        <td><%= risk.concentration %></td>
+                        <td><%= risk.sfi %></td>
+                        <td><%= risk.danger_class %></td>
+                        <td><%= risk.ur %></td>
+                        <td><%= risk.cr %></td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <% if (typeof cr != 'undefined') { %>
+              <p class="text-center fs-5 mt-2">
+                <span class="fw-medium">CR Sum:</span> <%= cr %>
+              </p>
+              <% } } else { %>
+              <p class="fs-5 text-center fw-medium mt-5">
+                Інформація про канцерогенний вплив відстуня
+              </p>
+              <% } } %> <% if (typeof pcr != 'undefined') { %>
+              <hr class="mt-5" />
+              <% if (pcr) { %>
+              <p class="text-center fs-5 mt-5">
+                <span class="fw-medium">PCR:</span> <%= pcr %>
+              </p>
+              <% } else { %>
+              <p class="fs-5 text-center fw-medium mt-5">
+                Інформація про PCR відстуня
+              </p>
+              <% } }%>
+            </div>
           </div>
         </section>
       </main>
