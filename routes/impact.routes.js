@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const ImpactControllers = require('../controllers/impact.controller.js');
-// const uploadFile = require("../config/multer");
+const impactControllers = require("../controllers/impact.controller.js");
 
 router
-    .route("/")
-    .get(ImpactControllers.index);
+  .route("/")
+  .get(impactControllers.index)
+  .post(impactControllers.calculateImpact);
 
 module.exports = router;
