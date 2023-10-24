@@ -63,6 +63,8 @@ module.exports.calculateImpact = catchAsyncError(async (req, res, next) => {
 
   res.render("impact/index", {
     objects,
+    object: impact.object,
+    year: impact.year,
     nonCarcinogenicRisks,
     hq: hqSum,
     carcinogenicRisks,
