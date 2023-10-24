@@ -5,17 +5,25 @@ module.exports.getAll = async () => {
   return rows;
 };
 
-module.exports.getNames = async () => {
-  const [rows] = await mysqlPool.query("SELECT object_name FROM object;");
-  return rows;
-}
-
 module.exports.getById = async (id) => {
   const [row] = await mysqlPool.query(
     "SELECT * FROM object WHERE object_id = ?;",
     [id]
   );
   return row[0];
+};
+
+module.exports.getIdByName = async (name) => {
+  const [row] = await mysqlPool.query(
+    "SELECT object_id FROM object WHERE object_name = ?;",
+    [name]
+  );
+  return row[0].object_id;
+};
+
+module.exports.getNames = async () => {
+  const [rows] = await mysqlPool.query("SELECT object_name FROM object;");
+  return rows;
 };
 
 module.exports.insertOne = async (object) => {
