@@ -66,6 +66,123 @@
                 Оцінити вплив
               </button>
             </form>
+            <div class="mt-5">
+              <% if (typeof nonCarcinogenicRisks != 'undefined') { %>
+              <hr class="mt-5" />
+              <p class="text-center fw-medium fs-3 mt-5">
+                Підприємство: <%= object %> <br />
+                Рік: <%= year %>
+              </p>
+              <hr class="mt-5" />
+              <% if (nonCarcinogenicRisks.length > 0) { %>
+              <div class="mt-5">
+                <h2 class="text-center">Неканцерогенний вплив</h2>
+                <div class="table-responsive mt-3">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr class="align-middle">
+                        <th scope="col">#</th>
+                        <th scope="col">Забрудник</th>
+                        <th scope="col">Кількість викидів (т/рік)</th>
+                        <th scope="col">Концентрація</th>
+                        <th scope="col">RFC</th>
+                        <th scope="col">Клас небезпеки</th>
+                        <th scope="col">HQ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% nonCarcinogenicRisks.forEach((risk, index) => { %>
+                      <tr>
+                        <th scope="row"><%= index + 1 %></th>
+                        <th class="fw-normal"><%= risk.pollutant_name %></th>
+                        <td><%= risk.pollution_value %></td>
+                        <td><%= risk.concentration %></td>
+                        <td><%= risk.rfc %></td>
+                        <td><%= risk.danger_class %></td>
+                        <td><%= risk.hq ? risk.hq.toFixed(4) : risk.hq %></td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <% if (typeof hq != 'undefined') { %>
+              <p class="text-center fs-5 mt-2">
+                <span class="fw-medium"
+                  >Сумма коефіцієнтів небезпеки (HQ):</span
+                >
+                <%= hq.toFixed(4) %>
+              </p>
+              <p class="text-center fs-5">
+                <span class="fw-medium">Ризик:</span> <% if (hq < 1) { %>
+                зневажливо малий <% } else if (hq === 1) { %> гранична величина
+                <% } else { %> імовірність розвитку шкідливих ефектів зростає
+                пропорційно збільшенню HQ <% } %>
+              </p>
+              <% } } else { %>
+              <p class="fs-5 text-center fw-medium mt-5">
+                Інформація про неканцерогенний вплив відстуня
+              </p>
+              <% } } %> <% if (typeof carcinogenicRisks != 'undefined') { %>
+              <hr class="mt-5" />
+              <% if (carcinogenicRisks.length > 0) { %>
+              <div class="mt-5">
+                <h2 class="text-center">Канцерогенний вплив</h2>
+                <div class="table-responsive mt-3">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr class="align-middle">
+                        <th scope="col">#</th>
+                        <th scope="col">Забрудник</th>
+                        <th scope="col">Кількість викидів (т/рік)</th>
+                        <th scope="col">Концентрація</th>
+                        <th scope="col">SFI</th>
+                        <th scope="col">Клас небезпеки</th>
+                        <th scope="col">UR</th>
+                        <th scope="col">CR</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% carcinogenicRisks.forEach((risk, index) => { %>
+                      <tr>
+                        <th scope="row"><%= index + 1 %></th>
+                        <th class="fw-normal"><%= risk.pollutant_name %></th>
+                        <td><%= risk.pollution_value %></td>
+                        <td><%= risk.concentration %></td>
+                        <td><%= risk.sfi %></td>
+                        <td><%= risk.danger_class %></td>
+                        <td><%= risk.ur ? risk.ur.toFixed(4) : risk.ur %></td>
+                        <td><%= risk.cr ? risk.cr.toFixed(4) : risk.cr %></td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <% if (typeof cr != 'undefined') { %>
+              <p class="text-center fs-5 mt-2">
+                <span class="fw-medium"
+                  >Сумма індивідуальнх канцерогенних ризиків (CR):</span
+                >
+                <%= cr.toFixed(4) %>
+              </p>
+              <% } } else { %>
+              <p class="fs-5 text-center fw-medium mt-5">
+                Інформація про канцерогенний вплив відстуня
+              </p>
+              <% } } %> <% if (typeof pcr != 'undefined') { %>
+              <hr class="mt-5" />
+              <% if (pcr) { %>
+              <p class="text-center fs-5 mt-5">
+                <span class="fw-medium">Популяційний ризик (PCR):</span> <%=
+                pcr.toFixed(4) %>
+              </p>
+              <% } else { %>
+              <p class="fs-5 text-center fw-medium mt-5">
+                Інформація про популяційний ризик (PCR) відстуня
+              </p>
+              <% } }%>
+            </div>
           </div>
         </section>
       </main>
