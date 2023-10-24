@@ -69,6 +69,11 @@
             <div class="mt-5">
               <% if (typeof nonCarcinogenicRisks != 'undefined') { %>
               <hr class="mt-5" />
+              <p class="text-center fw-medium fs-3 mt-5">
+                Підприємство: <%= object %> <br />
+                Рік: <%= year %>
+              </p>
+              <hr class="mt-5" />
               <% if (nonCarcinogenicRisks.length > 0) { %>
               <div class="mt-5">
                 <h2 class="text-center">Неканцерогенний вплив</h2>
@@ -94,7 +99,7 @@
                         <td><%= risk.concentration %></td>
                         <td><%= risk.rfc %></td>
                         <td><%= risk.danger_class %></td>
-                        <td><%= risk.hq %></td>
+                        <td><%= risk.hq ? risk.hq.toFixed(4) : risk.hq %></td>
                       </tr>
                       <% }); %>
                     </tbody>
@@ -103,7 +108,16 @@
               </div>
               <% if (typeof hq != 'undefined') { %>
               <p class="text-center fs-5 mt-2">
-                <span class="fw-medium">HQ Sum:</span> <%= hq %>
+                <span class="fw-medium"
+                  >Сумма коефіцієнтів небезпеки (HQ):</span
+                >
+                <%= hq.toFixed(4) %>
+              </p>
+              <p class="text-center fs-5">
+                <span class="fw-medium">Ризик:</span> <% if (hq < 1) { %>
+                зневажливо малий <% } else if (hq === 1) { %> гранична величина
+                <% } else { %> імовірність розвитку шкідливих ефектів зростає
+                пропорційно збільшенню HQ <% } %>
               </p>
               <% } } else { %>
               <p class="fs-5 text-center fw-medium mt-5">
@@ -137,8 +151,8 @@
                         <td><%= risk.concentration %></td>
                         <td><%= risk.sfi %></td>
                         <td><%= risk.danger_class %></td>
-                        <td><%= risk.ur %></td>
-                        <td><%= risk.cr %></td>
+                        <td><%= risk.ur ? risk.ur.toFixed(4) : risk.ur %></td>
+                        <td><%= risk.cr ? risk.cr.toFixed(4) : risk.cr %></td>
                       </tr>
                       <% }); %>
                     </tbody>
@@ -147,7 +161,10 @@
               </div>
               <% if (typeof cr != 'undefined') { %>
               <p class="text-center fs-5 mt-2">
-                <span class="fw-medium">CR Sum:</span> <%= cr %>
+                <span class="fw-medium"
+                  >Сумма індивідуальнх канцерогенних ризиків (CR):</span
+                >
+                <%= cr.toFixed(4) %>
               </p>
               <% } } else { %>
               <p class="fs-5 text-center fw-medium mt-5">
@@ -157,11 +174,12 @@
               <hr class="mt-5" />
               <% if (pcr) { %>
               <p class="text-center fs-5 mt-5">
-                <span class="fw-medium">PCR:</span> <%= pcr %>
+                <span class="fw-medium">Популяційний ризик (PCR):</span> <%=
+                pcr.toFixed(4) %>
               </p>
               <% } else { %>
               <p class="fs-5 text-center fw-medium mt-5">
-                Інформація про PCR відстуня
+                Інформація про популяційний ризик (PCR) відстуня
               </p>
               <% } }%>
             </div>
