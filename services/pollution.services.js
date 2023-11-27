@@ -38,6 +38,13 @@ module.exports.getIdByName = async (name) => {
   return id;
 };
 
+module.exports.getYears = async () => {
+  const [rows] = await mysqlPool.query(
+    "SELECT DISTINCT pollution_year as year FROM pollution ORDER BY pollution_year;"
+  );
+  return rows;
+};
+
 module.exports.insertOne = async (pollution) => {
   const objectId = await this.getIdByName(pollution.object);
   const pollutantId = await pollutantServices.getIdByName(pollution.pollutant);
