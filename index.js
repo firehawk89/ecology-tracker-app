@@ -10,6 +10,7 @@ const pollutantsRoutes = require("./routes/pollutant.routes");
 const pollutionRoutes = require("./routes/pollution.routes");
 const populationRoutes = require("./routes/population.routes");
 const impactRoutes = require("./routes/impact.routes");
+const lossesRoutes = require("./routes/losses.routes");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -23,6 +24,7 @@ app.use("/pollutants", pollutantsRoutes);
 app.use("/pollutions", pollutionRoutes);
 app.use("/population", populationRoutes);
 app.use("/impact", impactRoutes);
+app.use("/losses", lossesRoutes);
 
 app.get("/", (req, res) => {
   res.render("home", { message: "Hello, world!" });
