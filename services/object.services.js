@@ -21,6 +21,11 @@ module.exports.getIdByName = async (name) => {
   return row[0].object_id;
 };
 
+module.exports.getIds = async () => {
+  const [rows] = await mysqlPool.query("SELECT object_id FROM object;");
+  return rows;
+};
+
 module.exports.getNames = async () => {
   const [rows] = await mysqlPool.query("SELECT object_name FROM object;");
   return rows;
