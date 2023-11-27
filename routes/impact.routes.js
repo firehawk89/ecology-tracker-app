@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const impactControllers = require("../controllers/impact.controller.js");
+const impactController = require("../controllers/impact.controller.js");
 
 router
   .route("/")
-  .get(impactControllers.index)
-  .post(impactControllers.calculateImpact);
+  .get(impactController.index)
+  .post(impactController.calculateImpact);
 
 module.exports = router;
