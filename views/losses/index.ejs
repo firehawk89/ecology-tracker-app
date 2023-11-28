@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecology App - збитки державі</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="wrapper min-vh-100 d-flex flex-column">
+      <%- include('../partials/header.ejs') %>
+      <main class="flex-grow-1 flex-shrink-1 flex">
+        <section class="py-5">
+          <div class="container-xl">
+            <div class="text-center">
+              <h1>Збитки, заподіяні державі</h1>
+            </div>
+            <form
+              class="mt-4 form-validate d-flex flex-column gap-3 col-12 col-sm-8 col-md-7 col-lg-6 col-xl-5 mx-auto"
+              action="/losses"
+              method="POST"
+              novalidate
+            >
+              <div>
+                <label class="form-label" for="objectName"
+                  >Назва підприємства <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  list="objectList"
+                  id="objectName"
+                  name="losses[object]"
+                  placeholder="Шукати підприємство..."
+                />
+                <datalist id="objectList">
+                  <% objects.forEach(object => { %>
+                  <option value="<%=object.object_name %>"></option>
+                  <% }) %>
+                </datalist>
+                <div class="invalid-feedback">
+                  Будь ласка, введіть назву підприємства
+                </div>
+              </div>
+              <div>
+                <label class="form-label" for="year"
+                  >Рік <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  min="2016"
+                  max="2021"
+                  id="year"
+                  name="losses[year]"
+                />
+                <div class="invalid-feedback">Будь ласка, введіть рік</div>
+              </div>
+              <button class="btn btn-primary" type="submit">
+                Оцінити вплив
+              </button>
+            </form>
+            <div class="mt-5">
+              <% if (typeof losses != 'undefined') { %>
+              <hr class="mt-5" />
+              <p class="text-center fs-3 mt-5">
+                <span class="fw-medium">Підприємство:</span> <%= object ? object
+                : "всі підприємства" %> <br />
+                <span class="fw-medium">Рік:</span> <%= year ? year : "всі роки"
+                %> <br />
+                <span class="fw-medium">Загальна сума збитків:</span> <%=
+                totalLosses ? totalLosses.toFixed(2) : 0 %> грн
+              </p>
+              <hr class="mt-5" />
+              <% if (losses.length > 0) { %>
+              <div class="mt-5">
+                <div class="table-responsive mt-3">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr class="align-middle">
+                        <th scope="col">#</th>
+                        <th scope="col">Підприємство</th>
+                        <th scope="col">Речовина</th>
+                        <th scope="col">Рік</th>
+                        <th scope="col">Збитки (грн)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% losses.forEach((loss, index) => { %>
+                      <tr>
+                        <th scope="row"><%= index + 1 %></th>
+                        <th class="fw-normal"><%= loss.obj_name %></th>
+                        <td><%= loss.pollutant_name %></td>
+                        <td><%= loss.pollution_year %></td>
+                        <td><%= loss.fine ? loss.fine.toFixed(2) : 0 %></td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <% } else { %>
+              <p class="fs-5 text-center fw-medium mt-5">
+                Інформація про збитки державі відсутня
+              </p>
+              <% } } %>
+            </div>
+          </div>
+        </section>
+      </main>
+      <%- include('../partials/footer.ejs') %>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/setActiveNavLink.js"></script>
+    <script src="/js/validateForms.js"></script>
+  </body>
+</html>

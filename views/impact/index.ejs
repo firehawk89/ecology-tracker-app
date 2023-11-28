@@ -69,9 +69,10 @@
             <div class="mt-5">
               <% if (typeof nonCarcinogenicRisks != 'undefined') { %>
               <hr class="mt-5" />
-              <p class="text-center fw-medium fs-3 mt-5">
-                Підприємство: <%= object %> <br />
-                Рік: <%= year %>
+              <p class="text-center fs-3 mt-5">
+                <span class="fw-medium">Підприємство:</span> <%= object %>
+                <br />
+                <span class="fw-medium">Рік:</span> <%= year %>
               </p>
               <hr class="mt-5" />
               <% if (nonCarcinogenicRisks.length > 0) { %>
