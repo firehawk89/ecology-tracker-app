@@ -14,6 +14,13 @@ module.exports.getAll = async () => {
   return rows;
 };
 
+module.exports.getPollutantIds = async () => {
+  const [rows] = await mysqlPool.query(
+    "SELECT DISTINCT(pollutant_id) FROM pollution;"
+  );
+  return rows;
+};
+
 module.exports.getById = async (id) => {
   const [row] = await mysqlPool.query(
     `SELECT pollution.pollution_id, object.object_name, pollutant.pollutant_name, pollution.pollution_value, pollution.pollution_year, pollution.concentration
