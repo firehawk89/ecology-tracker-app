@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecology App - податок за викиди в атмосферне повітря</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="wrapper min-vh-100 d-flex flex-column">
+      <%- include('../partials/header.ejs') %>
+      <main class="flex-grow-1 flex-shrink-1 flex">
+        <section class="py-5">
+          <div class="container-xl">
+            <div class="text-center">
+              <h1>
+                Податок за викиди в атмосферне повітря забруднюючих речовин
+              </h1>
+            </div>
+            <form
+              class="mt-4 form-validate d-flex flex-column gap-3 col-12 col-sm-8 col-md-7 col-lg-6 col-xl-5 mx-auto"
+              action="/taxes"
+              method="POST"
+              novalidate
+            >
+              <div>
+                <label class="form-label" for="objectName"
+                  >Назва підприємства <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  list="objectList"
+                  id="objectName"
+                  name="taxes[object]"
+                  placeholder="Шукати підприємство..."
+                  required
+                />
+                <datalist id="objectList">
+                  <% objects.forEach(object => { %>
+                  <option value="<%=object.object_name %>"></option>
+                  <% }) %>
+                </datalist>
+                <div class="invalid-feedback">
+                  Будь ласка, введіть назву підприємства
+                </div>
+              </div>
+              <div>
+                <label class="form-label" for="year"
+                  >Рік <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  min="2016"
+                  max="2021"
+                  id="year"
+                  name="taxes[year]"
+                  required
+                />
+                <div class="invalid-feedback">Будь ласка, введіть рік</div>
+              </div>
+              <button class="btn btn-primary" type="submit">Обрахувати</button>
+            </form>
+            <div class="mt-5">
+              <% if (typeof taxes != 'undefined') { %>
+              <hr class="mt-5" />
+              <p class="text-center fs-3 mt-5">
+                <span class="fw-medium">Підприємство:</span> <%= object %>
+                <br />
+                <span class="fw-medium">Рік:</span> <%= year %>
+              </p>
+              <hr class="mt-5" />
+              <% if (taxes.length > 0) { %>
+              <div class="mt-5">
+                <div class="table-responsive mt-3">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr class="align-middle">
+                        <th scope="col">#</th>
+                        <th scope="col">Забрудник</th>
+                        <th scope="col">
+                          Податок за викиди в атмосферне повтіря
+                        </th>
+                        <th scope="col">Податок за скиди у водні об'єкти</th>
+                        <th scope="col">Податок за розміщення відходів</th>
+                        <th scope="col">
+                          Податок за утворення радіоактивних відходів
+                        </th>
+                        <th scope="col">
+                          Податок за тимчасове зберігання радіоактивних відходів
+                        </th>
+                        <th scope="col">Сума податку</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% taxes.forEach((tax, index) => { %>
+                      <tr>
+                        <th scope="row"><%= index + 1 %></th>
+                        <td class="fw-medium"><%= tax.pollutant %></td>
+                        <td><%= tax.air.toFixed(3) %></td>
+                        <td><%= tax.water.toFixed(3) %></td>
+                        <td><%= tax.placement.toFixed(3) %></td>
+                        <td><%= tax.radiation.toFixed(3) %></td>
+                        <td><%= tax.radiation_placement.toFixed(3) %></td>
+                        <td><%= tax.total_sum.toFixed(3) %></td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <% } else { %>
+              <p class="fs-5 text-center fw-medium mt-5">
+                Інформація про податки відсутня
+              </p>
+              <% } } %>
+            </div>
+          </div>
+        </section>
+      </main>
+      <%- include('../partials/footer.ejs') %>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/setActiveNavLink.js"></script>
+    <script src="/js/validateForms.js"></script>
+  </body>
+</html>
