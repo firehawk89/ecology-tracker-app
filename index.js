@@ -12,6 +12,7 @@ const populationRoutes = require("./routes/population.routes");
 const impactRoutes = require("./routes/impact.routes");
 const lossesRoutes = require("./routes/losses.routes");
 const taxesRoutes = require("./routes/taxes.routes");
+const emergencyRoutes = require("./routes/emergency.routes");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -27,6 +28,7 @@ app.use("/population", populationRoutes);
 app.use("/impact", impactRoutes);
 app.use("/losses", lossesRoutes);
 app.use("/taxes", taxesRoutes);
+app.use("/emergency", emergencyRoutes);
 
 app.get("/", (req, res) => {
   res.render("home");
