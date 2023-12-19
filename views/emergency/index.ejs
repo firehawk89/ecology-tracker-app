@@ -65,6 +65,74 @@
                 />
                 <div class="invalid-feedback">Будь ласка, введіть рік</div>
               </div>
+              <div>
+                <label class="form-label" for="child_age"
+                  >Вік дитини <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  min="0"
+                  max="18"
+                  id="child_age"
+                  name="emergency[child_age]"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Будь ласка, введіть вік дитини
+                </div>
+              </div>
+              <div>
+                <label class="form-label" for="damage_area"
+                  >Площа пошкодження (кв. м)
+                  <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  min="0"
+                  id="damage_area"
+                  name="emergency[damage_area]"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Будь ласка, введіть площу пошкодження
+                </div>
+              </div>
+              <div>
+                <label class="form-label" for="q"
+                  >Кількість втраченої продукції (од.)
+                  <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  min="0"
+                  id="q"
+                  name="emergency[q]"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Будь ласка, введіть кількість втраченої продукції
+                </div>
+              </div>
+              <div>
+                <label class="form-label" for="dead_fish"
+                  >Кількість загиблої риби (од.)
+                  <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="number"
+                  min="0"
+                  id="dead_fish"
+                  name="emergency[dead_fish]"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Будь ласка, введіть кількість загиблої риби
+                </div>
+              </div>
               <button class="btn btn-primary" type="submit">Обрахувати</button>
             </form>
             <div class="mt-5">
@@ -83,18 +151,18 @@
                     <thead>
                       <tr class="align-middle">
                         <th scope="col">
-                          Збитки від втрати життя та здоров'я населення
+                          Збитки від втрати життя та здоров'я населення (грн)
                         </th>
                         <th scope="col">
                           Збитки від руйнування та пошкодження основних фондів,
-                          знищення майна та продукції
+                          знищення майна та продукції (грн)
                         </th>
                         <th scope="col">
                           Збитки від вилучення або порушення
-                          сільськогосподарських угідь
+                          сільськогосподарських угідь (грн)
                         </th>
-                        <th scope="col">Збитки рибного господарства</th>
-                        <th scope="col">Загальний обсяг збитків</th>
+                        <th scope="col">Збитки рибного господарства (грн)</th>
+                        <th scope="col">Загальний обсяг збитків (грн)</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -104,7 +172,7 @@
                         <td><%= item.mp.toFixed(3) %></td>
                         <td><%= item.rsg.toFixed(3) %></td>
                         <td><%= item.rrg.toFixed(3) %></td>
-                        <td><%= item.s.toFixed(3) %></td>
+                        <td><%= item.sum.toFixed(3) %></td>
                       </tr>
                       <% }); %>
                     </tbody>
